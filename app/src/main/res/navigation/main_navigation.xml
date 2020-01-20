@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.moviedb.ui.home.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" />
+    <fragment
+        android:id="@+id/discoverFragment"
+        android:name="com.example.moviedb.ui.discover.DiscoverFragment"
+        android:label="discover_fragment"
+        tools:layout="@layout/discover_fragment" />
+    <fragment
+        android:id="@+id/comingFragment"
+        android:name="com.example.moviedb.ui.coming.ComingFragment"
+        android:label="coming_fragment"
+        tools:layout="@layout/coming_fragment" />
+</navigation>
