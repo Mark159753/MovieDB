@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="sides_margin">12dp</dimen>
+    <dimen name="corner_radius">25dp</dimen>
+
+    <dimen name="head_card_with">110dp</dimen>
+    <dimen name="head_card_height">200dp</dimen>
+
+</resources>

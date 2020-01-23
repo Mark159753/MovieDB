@@ -1,13 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Home" />
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_bg"
+            android:layout_marginLeft="@dimen/sides_margin"
+            android:layout_marginRight="@dimen/sides_margin"
+            android:layout_marginTop="@dimen/sides_margin"
+            app:queryHint="@string/search_hint"/>
 
-</FrameLayout>
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginRight="@dimen/sides_margin"
+            android:layout_marginLeft="@dimen/sides_margin"
+            app:tabIndicatorHeight="0dp"
+            app:tabGravity="center"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabTextAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:tabTextColor="@color/textHintColor"
+            android:layout_marginTop="@dimen/sides_margin">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/in_theaters_tab" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/on_tv_tab" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/in_theater_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/head_card_height"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/sides_margin"
+            tools:listitem="@layout/head_film_item"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/sides_margin"
+            android:background="@drawable/head_container"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

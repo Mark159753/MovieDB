@@ -3,4 +3,7 @@
     <string name="home_menu">Home</string>
     <string name="discover_menu">Discover</string>
     <string name="coming_menu">Coming</string>
+    <string name="search_hint">Search for a movie, tv show, person</string>
+    <string name="in_theaters_tab">In Theaters</string>
+    <string name="on_tv_tab">On TV</string>
 </resources>
