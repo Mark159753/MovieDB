@@ -45,13 +45,4 @@ abstract class BaseMovieAdapter<T>(callback:DiffUtil.ItemCallback<T>)
         }
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            R.layout.head_film_item -> HeadItemHolder.create(parent)
-            R.layout.network_state_head_item -> NetworkSrateHolder.create(parent)
-            else -> throw IllegalStateException("unknown view type $viewType")
-        }
-    }
-
 }

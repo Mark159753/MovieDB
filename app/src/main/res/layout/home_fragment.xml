@@ -20,6 +20,7 @@
             app:queryHint="@string/search_hint"/>
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/head_tabs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
@@ -35,12 +36,13 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/in_theaters_tab" />
+                android:text="@string/in_theaters_tab"/>
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/on_tv_tab" />
+
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -50,6 +52,16 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/sides_margin"
+            tools:listitem="@layout/head_film_item"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/on_tv_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/head_card_height"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/sides_margin"
+            android:visibility="gone"
             tools:listitem="@layout/head_film_item"/>
 
         <LinearLayout

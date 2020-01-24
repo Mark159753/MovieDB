@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.moviedb.data.local.FilmsDB
 import com.example.moviedb.data.local.dao.MoviesDao
+import com.example.moviedb.data.local.dao.TvDao
 import com.example.moviedb.data.network.TMDBserver
 import com.example.moviedb.data.repository.Repository
 import com.example.moviedb.data.repository.RepositoryImpl
@@ -28,6 +29,13 @@ object ApplicationModule {
     @Provides
     fun provideMoviesDao(database:FilmsDB):MoviesDao{
         return database.getMoviesDao()
+    }
+
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideTvDao(database:FilmsDB):TvDao{
+        return database.getTvDao()
     }
 
     @JvmStatic

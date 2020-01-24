@@ -6,26 +6,25 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.databinding.HeadFilmItemBinding
-import com.example.moviedb.model.ResultMovie
+import com.example.moviedb.model.ResultTV
 import com.squareup.picasso.Picasso
 
-class HeadItemHolder(view:View): RecyclerView.ViewHolder(view) {
+class TvItemHolder(view:View):RecyclerView.ViewHolder(view) {
 
-    private var binder:HeadFilmItemBinding = DataBindingUtil.bind(view)!!
+    private var binder: HeadFilmItemBinding = DataBindingUtil.bind(view)!!
 
-    fun bind(data:ResultMovie?){
-        binder.movieTitle.text = data!!.title
+    fun bind(data:ResultTV?){
+        binder.movieTitle.text = data!!.name
         Picasso.get()
             .load("https://image.tmdb.org/t/p/w500" + data.posterPath)
             .into(binder.headPosterImg)
     }
 
-
     companion object{
-        fun create(parent:ViewGroup):HeadItemHolder{
+        fun create(parent: ViewGroup):TvItemHolder{
             val inflater = LayoutInflater.from(parent.context)
             val binding = HeadFilmItemBinding.inflate(inflater, parent, false)
-            return HeadItemHolder(binding.root)
+            return TvItemHolder(binding.root)
         }
     }
 }
