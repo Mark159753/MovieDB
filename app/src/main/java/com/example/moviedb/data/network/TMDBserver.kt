@@ -1,7 +1,9 @@
 package com.example.moviedb.data.network
 
-import com.example.moviedb.model.InTheaterResponse
-import com.example.moviedb.model.OnTvResponse
+import com.example.moviedb.model.popular.ResponsePopular
+import com.example.moviedb.model.theathre.InTheaterResponse
+import com.example.moviedb.model.trendsOfDay.TrendsResponse
+import com.example.moviedb.model.tv.OnTvResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -28,6 +30,18 @@ interface TMDBserver {
         @Query("language") language:String = "en-US", // uk-UK Українська
         @Query("page") page:Int = 1
     ):Call<OnTvResponse>
+
+    @GET("movie/popular")
+    fun getMoviesPopular(
+        @Query("language") language:String = "en-US", // uk-UK Українська
+        @Query("page") page:Int = 1
+    ):Call<ResponsePopular>
+
+    @GET("trending/movie/day")
+    fun getMovieTrendsOfDay(
+        @Query("language") language:String = "en-US", // uk-UK Українська
+        @Query("page") page:Int = 1
+    ):Call<TrendsResponse>
 
     companion object{
         operator fun invoke():TMDBserver{

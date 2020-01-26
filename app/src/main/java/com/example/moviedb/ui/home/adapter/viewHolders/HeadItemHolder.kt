@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.databinding.HeadFilmItemBinding
-import com.example.moviedb.model.ResultMovie
+import com.example.moviedb.model.theathre.ResultMovie
 import com.squareup.picasso.Picasso
 
 class HeadItemHolder(view:View): RecyclerView.ViewHolder(view) {
 
     private var binder:HeadFilmItemBinding = DataBindingUtil.bind(view)!!
 
-    fun bind(data:ResultMovie?){
+    fun bind(data: ResultMovie?){
         binder.movieTitle.text = data!!.title
         Picasso.get()
             .load("https://image.tmdb.org/t/p/w500" + data.posterPath)

@@ -1,12 +1,11 @@
-package com.example.moviedb.model
+package com.example.moviedb.model.tv
 
 
 import com.google.gson.annotations.SerializedName
 
-data class InTheaterResponse(
-    val dates: Dates,
+data class OnTvResponse(
     val page: Int,
-    val results: List<ResultMovie>,
+    val results: List<ResultTV>,
     @SerializedName("total_pages")
     val totalPages: Int,
     @SerializedName("total_results")

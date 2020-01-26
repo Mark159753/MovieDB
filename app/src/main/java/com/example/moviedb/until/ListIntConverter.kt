@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
 
-class ListConverter {
+class ListIntConverter {
 
     @TypeConverter
     fun fromList(list:List<Int>):String{

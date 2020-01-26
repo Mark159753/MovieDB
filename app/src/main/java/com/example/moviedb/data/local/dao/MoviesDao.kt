@@ -2,7 +2,7 @@ package com.example.moviedb.data.local.dao
 
 import androidx.paging.DataSource
 import androidx.room.*
-import com.example.moviedb.model.ResultMovie
+import com.example.moviedb.model.theathre.ResultMovie
 
 @Dao
 interface MoviesDao{

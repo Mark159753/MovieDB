@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        app:cardElevation="4dp"
+        android:layout_height="90dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/popular_poster"
+                android:layout_width="72dp"
+                android:layout_height="match_parent"
+                android:background="@color/textHintColor"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/popular_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginLeft="@dimen/sides_margin"
+                android:layout_marginTop="@dimen/sides_margin"
+                android:layout_marginRight="@dimen/sides_margin"
+                android:layout_toStartOf="@+id/popular_stars"
+                android:layout_toEndOf="@+id/popular_poster"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                tools:text="Film Name" />
+
+            <RatingBar
+                android:id="@+id/popular_stars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_toLeftOf="@id/popular_rating"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="14dp"
+                android:numStars="5"
+                android:rating="3.6"
+                android:stepSize="10"
+                android:isIndicator="true"/>
+
+            <TextView
+                android:id="@+id/popular_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="7.2"
+                android:layout_marginTop="11dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"/>
+
+            <TextView
+                android:id="@+id/popular_overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/popular_title"
+                android:layout_toRightOf="@id/popular_poster"
+                tools:text="sf seb efbreen kne kek efkfkjfd skd sfdklfskdlsfldk kf fsdjfd sfdksfd ksdskdf ksfdffdkl skf ksf"
+                android:layout_marginTop="@dimen/sides_margin"
+                android:layout_marginRight="@dimen/sides_margin"
+                android:layout_marginLeft="@dimen/sides_margin"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>
+

@@ -2,26 +2,43 @@ package com.example.moviedb.data.repository
 
 import android.content.SharedPreferences
 import android.text.format.DateUtils
+import android.util.Log
+import android.view.textclassifier.TextLanguage
+import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import com.example.moviedb.data.local.dao.MoviesDao
+import com.example.moviedb.data.local.dao.PopularMoviesDao
+import com.example.moviedb.data.local.dao.TrendsDao
 import com.example.moviedb.data.local.dao.TvDao
 import com.example.moviedb.data.network.TMDBserver
+import com.example.moviedb.model.popular.PopularResult
+import com.example.moviedb.model.popular.ResponsePopular
 import com.example.moviedb.ui.home.paging.InTheatreCallback
 import com.example.moviedb.ui.home.paging.OnTvCallback
-import com.example.moviedb.model.InTheaterResponse
-import com.example.moviedb.model.OnTvResponse
-import com.example.moviedb.model.ResultMovie
-import com.example.moviedb.model.ResultTV
+import com.example.moviedb.model.theathre.InTheaterResponse
+import com.example.moviedb.model.tv.OnTvResponse
+import com.example.moviedb.model.theathre.ResultMovie
+import com.example.moviedb.model.trendsOfDay.TrendResult
+import com.example.moviedb.model.trendsOfDay.TrendsResponse
+import com.example.moviedb.model.tv.ResultTV
 import com.example.moviedb.until.Listening
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
-const val TIME_REQUEST = "check_time"
+const val TIME_REQUEST_THEATER = "check_time_THEATER"
+const val TIME_REQUEST_TV = "TIME_REQUEST_TV"
+const val TIME_REQUEST_POPULAR = "TIME_REQUEST_POPULAR"
+const val TIME_REQUEST_TRENDS = "TIME_REQUEST_TRENDS"
 
 class RepositoryImpl @Inject constructor(
     private val moviesDao: MoviesDao,
     private val tvDao:TvDao,
+    private val popularMoviesDao: PopularMoviesDao,
+    private val trendsDao: TrendsDao,
     private val apiServer:TMDBserver,
     private val ioExecutor:Executor,
     private val sharedPreferences: SharedPreferences
@@ -48,7 +65,7 @@ class RepositoryImpl @Inject constructor(
     }
 
     override fun refreshMoviesList() {
-        val time = sharedPreferences.getLong(TIME_REQUEST, 0)
+        val time = sharedPreferences.getLong(TIME_REQUEST_THEATER, 0)
 
         if (time == 0L) {
             clearMovieDB()
@@ -60,7 +77,7 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    private fun insertMovieResultIntoDb(body:InTheaterResponse?){
+    private fun insertMovieResultIntoDb(body: InTheaterResponse?){
         body?.results?.let {
             moviesDao.insert(it)
         }
@@ -74,7 +91,7 @@ class RepositoryImpl @Inject constructor(
     private fun clearMovieDB(){
         ioExecutor.execute {
             moviesDao.cleareMovies()
-            saveCurrentTime()
+            saveCurrentTime(TIME_REQUEST_THEATER)
         }
     }
 
@@ -100,7 +117,7 @@ class RepositoryImpl @Inject constructor(
     }
 
     override fun refreshTvList() {
-        val time = sharedPreferences.getLong(TIME_REQUEST, 0)
+        val time = sharedPreferences.getLong(TIME_REQUEST_TV, 0)
 
         if (time == 0L) {
             clearTvDB()
@@ -115,7 +132,7 @@ class RepositoryImpl @Inject constructor(
     private fun clearTvDB(){
         ioExecutor.execute {
             tvDao.clearMovies()
-            saveCurrentTime()
+            saveCurrentTime(TIME_REQUEST_TV)
         }
     }
 
@@ -124,15 +141,102 @@ class RepositoryImpl @Inject constructor(
         return size/20 +1
     }
 
-    private fun insertTvResultIntoDb(body:OnTvResponse?){
+    private fun insertTvResultIntoDb(body: OnTvResponse?){
         body?.results?.let {
             tvDao.insert(it)
         }
     }
 
-    private fun saveCurrentTime(){
+    //---------------------------------------------
+
+
+    override fun getPopularMovies(): LiveData<List<PopularResult>> {
+        val time = sharedPreferences.getLong(TIME_REQUEST_POPULAR, 0)
+
+        if (time == 0L || isUpdateNeeded(Date(time), 3)){
+            loadPopularMovies()
+            return popularMoviesDao.getAllPopularMovies()
+        }else{
+            return popularMoviesDao.getAllPopularMovies()
+        }
+
+    }
+
+    private fun updatePopularMoviews(list: List<PopularResult>){
+        ioExecutor.execute {
+            popularMoviesDao.clearAll()
+            popularMoviesDao.insert(list)
+        }
+    }
+
+    private fun loadPopularMovies(){
+        apiServer.getMoviesPopular("uk-uk")
+            .enqueue(object :Callback<ResponsePopular>{
+                override fun onFailure(call: Call<ResponsePopular>, t: Throwable) {
+                    Log.e("ERROR LOAD POPULAR", t.message)
+                }
+
+                override fun onResponse(
+                    call: Call<ResponsePopular>,
+                    response: Response<ResponsePopular>
+                ) {
+                    if (response.isSuccessful){
+                        updatePopularMoviews(response.body()!!.results)
+                        saveCurrentTime(TIME_REQUEST_POPULAR)
+                    }else{
+                        Log.e("ERROR LOAD POPULAR", response.code().toString())
+                    }
+                }
+            })
+    }
+
+    //-----------------------------------------------------------------
+
+    override fun getTrendsOfQuantity(quantity: Int): LiveData<List<TrendResult>> {
+        val time = sharedPreferences.getLong(TIME_REQUEST_TRENDS, 0)
+
+        return if (time == 0L || isUpdateNeeded(Date(time), 3)){
+            loadTrendsOfDay()
+            trendsDao.getTrendsOfQuantity(quantity)
+        }else{
+            trendsDao.getTrendsOfQuantity(quantity)
+        }
+    }
+
+    private fun updateTrends(list: List<TrendResult>){
+        ioExecutor.execute {
+            trendsDao.clearTrends()
+            trendsDao.insert(list)
+        }
+    }
+
+    private fun loadTrendsOfDay(language: String = "uk-uk"){
+        apiServer.getMovieTrendsOfDay(language)
+            .enqueue(object :Callback<TrendsResponse>{
+                override fun onFailure(call: Call<TrendsResponse>, t: Throwable) {
+                    Log.e("ERROR LOAD TRENDS", t.message)
+                }
+
+                override fun onResponse(
+                    call: Call<TrendsResponse>,
+                    response: Response<TrendsResponse>
+                ) {
+                    if (response.isSuccessful){
+                        updateTrends(response.body()!!.results)
+                        saveCurrentTime(TIME_REQUEST_TRENDS)
+                    }else{
+                        Log.e("ERROR LOAD TRENDS", response.code().toString())
+                    }
+
+                }
+            })
+    }
+
+
+
+    private fun saveCurrentTime(key:String){
         with(sharedPreferences.edit()) {
-            putLong(TIME_REQUEST, Date().time)
+            putLong(key, Date().time)
             commit()
         }
     }

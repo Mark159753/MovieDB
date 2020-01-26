@@ -2,6 +2,7 @@ package com.example.moviedb.ui.home
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.example.moviedb.di.ViewModelFactoryDI
 import com.example.moviedb.ui.MainActivity
 import com.example.moviedb.ui.home.adapter.MarginDecorator
 import com.example.moviedb.ui.home.adapter.MovieRvAdapter
+import com.example.moviedb.ui.home.adapter.PopularMoviesPagerAdapter
 import com.example.moviedb.ui.home.adapter.TvRvAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -35,6 +37,7 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate<HomeFragmentBinding>(inflater,
             R.layout.home_fragment, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -47,11 +50,24 @@ class HomeFragment : Fragment() {
             .inject(this)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
+        binding.model = viewModel
 
         initTabs()
         initInTheatreAdapter()
         initOnTvAdapter()
+        initPopularMovies()
 
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        binding.popularSlider.resumeAutoScroll()
+    }
+
+    override fun onPause() {
+        binding.popularSlider.pauseAutoScroll()
+        super.onPause()
     }
 
     private fun initTabs(){
@@ -105,6 +121,18 @@ class HomeFragment : Fragment() {
 
         viewModel.networkStateTv.observe(viewLifecycleOwner, Observer {
             mAdapter.setNetworkState(it)
+        })
+    }
+
+    private fun initPopularMovies(){
+        viewModel.popularMovies.observe(viewLifecycleOwner, Observer {
+            if (it == null) return@Observer
+            binding.popularProgressBar.visibility = View.GONE
+            binding.popularSlider.apply {
+                visibility = View.VISIBLE
+                adapter = PopularMoviesPagerAdapter(this@HomeFragment.activity!!, it, true)
+                pageMargin = 24
+            }
         })
     }
 

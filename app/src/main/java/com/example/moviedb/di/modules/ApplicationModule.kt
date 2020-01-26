@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.moviedb.data.local.FilmsDB
 import com.example.moviedb.data.local.dao.MoviesDao
+import com.example.moviedb.data.local.dao.PopularMoviesDao
+import com.example.moviedb.data.local.dao.TrendsDao
 import com.example.moviedb.data.local.dao.TvDao
 import com.example.moviedb.data.network.TMDBserver
 import com.example.moviedb.data.repository.Repository
@@ -36,6 +38,20 @@ object ApplicationModule {
     @Provides
     fun provideTvDao(database:FilmsDB):TvDao{
         return database.getTvDao()
+    }
+
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun providePopularMoviesDao(database:FilmsDB):PopularMoviesDao{
+        return database.getPopularMoviesDao()
+    }
+
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideTrendsDao(database:FilmsDB):TrendsDao{
+        return database.getTrendsDao()
     }
 
     @JvmStatic

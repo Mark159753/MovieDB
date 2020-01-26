@@ -1,21 +1,20 @@
-package com.example.moviedb.model
+package com.example.moviedb.model.trendsOfDay
 
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.example.moviedb.until.ListConverter
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "ResultMovies")
-data class ResultMovie(
+@Entity(tableName = "trendsResult")
+data class TrendResult(
     val adult: Boolean,
     @SerializedName("backdrop_path")
     val backdropPath: String?,
     @SerializedName("genre_ids")
-    @TypeConverters(ListConverter::class)
     val genreIds: List<Int>,
     val id: Int,
+    @SerializedName("media_type")
+    val mediaType: String,
     @SerializedName("original_language")
     val originalLanguage: String,
     @SerializedName("original_title")

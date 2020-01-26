@@ -18,6 +18,10 @@ class HomeViewModel @Inject constructor(
     val resultTv = tvListResult.pagedList
     val networkStateTv = tvListResult.networkState
 
+    val popularMovies = repository.getPopularMovies()
+
+    val trendsOfDay = repository.getTrendsOfQuantity(3)
+
     fun refreshTv(){
         repository.refreshTvList()
     }

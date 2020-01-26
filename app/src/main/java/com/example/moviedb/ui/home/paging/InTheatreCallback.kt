@@ -1,8 +1,8 @@
 package com.example.moviedb.ui.home.paging
 
 import com.example.moviedb.data.network.TMDBserver
-import com.example.moviedb.model.InTheaterResponse
-import com.example.moviedb.model.ResultMovie
+import com.example.moviedb.model.theathre.InTheaterResponse
+import com.example.moviedb.model.theathre.ResultMovie
 import java.util.concurrent.Executor
 
 class InTheatreCallback(

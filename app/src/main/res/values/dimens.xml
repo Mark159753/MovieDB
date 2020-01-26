@@ -7,4 +7,7 @@
     <dimen name="head_card_with">110dp</dimen>
     <dimen name="head_card_height">200dp</dimen>
 
+    <dimen name="popular_movies_height">110dp</dimen>
+    <dimen name="home_img_margins">2dp</dimen>
+
 </resources>

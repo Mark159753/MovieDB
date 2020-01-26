@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.fragment.app.FragmentActivity
 import com.example.moviedb.data.local.dao.MoviesDao
+import com.example.moviedb.data.local.dao.PopularMoviesDao
+import com.example.moviedb.data.local.dao.TrendsDao
 import com.example.moviedb.data.local.dao.TvDao
 import com.example.moviedb.data.network.TMDBserver
 import com.example.moviedb.data.repository.Repository
@@ -26,7 +28,8 @@ object SharedPrefferencesModule {
     @JvmStatic
     @FragmentScope
     @Provides
-    fun provideRepository(dao: MoviesDao, tvDao: TvDao, server: TMDBserver, ioExecutor: Executor, preferences: SharedPreferences): Repository {
-        return RepositoryImpl(dao, tvDao, server, ioExecutor, preferences)
+    fun provideRepository(dao: MoviesDao, tvDao: TvDao, popularMoviesDao: PopularMoviesDao,
+                          trendsDao: TrendsDao, server: TMDBserver, ioExecutor: Executor, preferences: SharedPreferences): Repository {
+        return RepositoryImpl(dao, tvDao, popularMoviesDao, trendsDao, server, ioExecutor, preferences)
     }
 }

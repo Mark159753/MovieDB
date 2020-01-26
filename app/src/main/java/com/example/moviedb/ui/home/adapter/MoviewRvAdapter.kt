@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.R
-import com.example.moviedb.model.ResultMovie
+import com.example.moviedb.model.theathre.ResultMovie
 import com.example.moviedb.ui.home.adapter.viewHolders.HeadItemHolder
 import com.example.moviedb.ui.home.adapter.viewHolders.NetworkSrateHolder
 import java.lang.IllegalStateException

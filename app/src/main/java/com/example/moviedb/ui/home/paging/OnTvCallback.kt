@@ -1,8 +1,8 @@
 package com.example.moviedb.ui.home.paging
 
 import com.example.moviedb.data.network.TMDBserver
-import com.example.moviedb.model.OnTvResponse
-import com.example.moviedb.model.ResultTV
+import com.example.moviedb.model.tv.OnTvResponse
+import com.example.moviedb.model.tv.ResultTV
 import java.util.concurrent.Executor
 
 class OnTvCallback(
