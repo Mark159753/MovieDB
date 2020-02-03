@@ -5,4 +5,7 @@
     <color name="colorAccent">#fac109</color>
 
     <color name="textHintColor">#8e8e8e</color>
+    
+    <color name="rating_bg_blue">#607d8b</color>
+    <color name="grey">#C4C4C4</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.moviedb.ui.home.paging
+package com.example.moviedb.ui.base
 
 import androidx.paging.PagedList
 import com.example.moviedb.extention.createStatusLiveData
@@ -13,10 +13,11 @@ abstract class BasePagingCallback<T, R>(
 )
     :PagedList.BoundaryCallback<T>(){
 
-    val helper = PagingRequestHelper(ioExecutor)
+    val helper =
+        PagingRequestHelper(ioExecutor)
     val networkState = helper.createStatusLiveData()
 
-    protected fun insertItemIntoDB(response: Response<R>, it:PagingRequestHelper.Request.Callback){
+    protected fun insertItemIntoDB(response: Response<R>, it: PagingRequestHelper.Request.Callback){
         ioExecutor.execute {
             handlerResponse(response.body())
             it.recordSuccess()

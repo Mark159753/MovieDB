@@ -14,10 +14,12 @@ class TvItemHolder(view:View):RecyclerView.ViewHolder(view) {
     private var binder: HeadFilmItemBinding = DataBindingUtil.bind(view)!!
 
     fun bind(data: ResultTV?){
-        binder.movieTitle.text = data!!.name
-        Picasso.get()
-            .load("https://image.tmdb.org/t/p/w500" + data.posterPath)
-            .into(binder.headPosterImg)
+        data?.let {
+            binder.movieTitle.text = it.name
+            Picasso.get()
+                .load("https://image.tmdb.org/t/p/w500" + it.posterPath)
+                .into(binder.headPosterImg)
+        }
     }
 
     companion object{

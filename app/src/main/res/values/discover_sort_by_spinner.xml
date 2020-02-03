@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="discover_sort_by">
+        <item>Sort By</item>
+        <item>popularity ascending</item>
+        <item>release date ascending</item>
+        <item>release date descending</item>
+        <item>vote average ascending</item>
+        <item>vote average descending</item>
+        <item>original title ascending</item>
+        <item>original title descending</item>
+    </string-array>
+
+    <string-array name="discover_command_sort">
+        <item>popularity.desc</item>
+        <item>popularity.asc</item>
+        <item>release_date.asc</item>
+        <item>release_date.desc</item>
+        <item>vote_average.asc</item>
+        <item>vote_average.desc</item>
+        <item>original_title.asc</item>
+        <item>original_title.desc</item>
+    </string-array>
+</resources>

@@ -3,10 +3,7 @@ package com.example.moviedb.di.modules
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.moviedb.data.local.FilmsDB
-import com.example.moviedb.data.local.dao.MoviesDao
-import com.example.moviedb.data.local.dao.PopularMoviesDao
-import com.example.moviedb.data.local.dao.TrendsDao
-import com.example.moviedb.data.local.dao.TvDao
+import com.example.moviedb.data.local.dao.*
 import com.example.moviedb.data.network.TMDBserver
 import com.example.moviedb.data.repository.Repository
 import com.example.moviedb.data.repository.RepositoryImpl
@@ -57,12 +54,19 @@ object ApplicationModule {
     @JvmStatic
     @Singleton
     @Provides
+    fun provideGenreDao(database:FilmsDB):GenreDao{
+        return database.getGenreDao()
+    }
+
+
+    @JvmStatic
+    @Singleton
+    @Provides
     fun provideTMDBserver():TMDBserver{
         return TMDBserver.invoke()
     }
 
     @JvmStatic
-    @Singleton
     @Provides
     fun provideIoExecutor():Executor{
         return Executors.newSingleThreadExecutor()

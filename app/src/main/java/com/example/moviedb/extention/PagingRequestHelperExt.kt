@@ -2,7 +2,7 @@ package com.example.moviedb.extention
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.moviedb.ui.home.paging.PagingRequestHelper
+import com.example.moviedb.ui.base.PagingRequestHelper
 import com.example.moviedb.until.NetworkState
 
 private fun getErrorMessage(report: PagingRequestHelper.StatusReport): String {

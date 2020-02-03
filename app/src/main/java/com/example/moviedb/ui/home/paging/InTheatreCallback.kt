@@ -3,6 +3,8 @@ package com.example.moviedb.ui.home.paging
 import com.example.moviedb.data.network.TMDBserver
 import com.example.moviedb.model.theathre.InTheaterResponse
 import com.example.moviedb.model.theathre.ResultMovie
+import com.example.moviedb.ui.base.BasePagingCallback
+import com.example.moviedb.ui.base.PagingRequestHelper
 import java.util.concurrent.Executor
 
 class InTheatreCallback(

@@ -3,13 +3,12 @@ package com.example.moviedb.di.modules
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.fragment.app.FragmentActivity
-import com.example.moviedb.data.local.dao.MoviesDao
-import com.example.moviedb.data.local.dao.PopularMoviesDao
-import com.example.moviedb.data.local.dao.TrendsDao
-import com.example.moviedb.data.local.dao.TvDao
+import com.example.moviedb.data.local.dao.*
 import com.example.moviedb.data.network.TMDBserver
 import com.example.moviedb.data.repository.Repository
 import com.example.moviedb.data.repository.RepositoryImpl
+import com.example.moviedb.data.repository.discover.DiscoverRepository
+import com.example.moviedb.data.repository.discover.DiscoverRepositoryImpl
 import com.example.moviedb.di.scope.FragmentScope
 import dagger.Module
 import dagger.Provides
@@ -31,5 +30,12 @@ object SharedPrefferencesModule {
     fun provideRepository(dao: MoviesDao, tvDao: TvDao, popularMoviesDao: PopularMoviesDao,
                           trendsDao: TrendsDao, server: TMDBserver, ioExecutor: Executor, preferences: SharedPreferences): Repository {
         return RepositoryImpl(dao, tvDao, popularMoviesDao, trendsDao, server, ioExecutor, preferences)
+    }
+
+    @JvmStatic
+    @FragmentScope
+    @Provides
+    fun provideDiscoverRepository(apiServer:TMDBserver, ioExecutor: Executor, genreDao: GenreDao):DiscoverRepository{
+        return DiscoverRepositoryImpl(apiServer, ioExecutor, genreDao)
     }
 }

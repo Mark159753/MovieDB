@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="data"
+            type="com.example.moviedb.model.discover.DiscoverResult"/>
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/discover_poster"
+                android:layout_width="146dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:loadImg="@{data.posterPath}"
+                android:background="@color/textHintColor"/>
+
+            <RelativeLayout
+                android:id="@+id/discover_head_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/discover_poster"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp">
+                <RelativeLayout
+                    android:id="@+id/dis_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/oval"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_height="wrap_content">
+
+                    <ProgressBar
+                        android:id="@+id/discover_progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:indeterminate="false"
+                        android:max="100"
+                        app:calculateProgress="@{data}"
+                        android:progressDrawable="@drawable/progress_bar_bg"
+                        android:secondaryProgress="0" />
+
+                    <TextView
+                        android:id="@+id/txtProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/discover_progressBar"
+                        android:layout_centerInParent="true"
+                        android:textColor="@android:color/white"
+                        app:showProgress="@{data}"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/dis_rating"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/discover_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Toy Story 4"
+                        android:text="@{data.title}"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+                    <TextView
+                        android:id="@+id/discover_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Jun 19, 2019"
+                        android:text="@{data.releaseDate}"
+                        android:textColor="@color/textHintColor"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"/>
+                </LinearLayout>
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/discover_overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{data.overview}"
+                tools:text="@string/toy_story_lorem"
+                android:layout_below="@id/discover_head_container"
+                android:layout_toRightOf="@id/discover_poster"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="8"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

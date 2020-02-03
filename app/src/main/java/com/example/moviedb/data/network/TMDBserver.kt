@@ -1,5 +1,7 @@
 package com.example.moviedb.data.network
 
+import com.example.moviedb.model.discover.DiscoverResponse
+import com.example.moviedb.model.genre.GenreResponse
 import com.example.moviedb.model.popular.ResponsePopular
 import com.example.moviedb.model.theathre.InTheaterResponse
 import com.example.moviedb.model.trendsOfDay.TrendsResponse
@@ -13,6 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.*
 
 private const val BASE_URL = "https://api.themoviedb.org/3/"
 private const val API_KEY = "5fef28f1dfa50d13b3dd0ccd57ee7ef5"
@@ -42,6 +45,22 @@ interface TMDBserver {
         @Query("language") language:String = "en-US", // uk-UK Українська
         @Query("page") page:Int = 1
     ):Call<TrendsResponse>
+
+    @GET("discover/movie")
+    fun getDiscoverMovie(
+        @Query("language") language:String = "en-US", // uk-UK Українська
+        @Query("page") page:Int = 1,
+        @Query("sort_by") sort_by:String = "popularity.desc",
+        @Query("with_genres") with_genres:List<Int>? = null,
+        @Query("without_genres") without_genres:List<Int>? = null,
+        @Query("primary_release_date.gte") primary_release_date_from:String? = null,
+        @Query("primary_release_date.lte") primary_release_date_to:String? = null
+    ):Call<DiscoverResponse>
+
+    @GET("genre/movie/list")
+    fun getGenreList(
+        @Query("language") language:String = "en_US"
+    ):Call<GenreResponse>
 
     companion object{
         operator fun invoke():TMDBserver{

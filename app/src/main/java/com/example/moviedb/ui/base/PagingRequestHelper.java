@@ -1,4 +1,4 @@
-package com.example.moviedb.ui.home.paging;
+package com.example.moviedb.ui.base;
 
 import java.util.Arrays;
 import java.util.concurrent.CopyOnWriteArrayList;

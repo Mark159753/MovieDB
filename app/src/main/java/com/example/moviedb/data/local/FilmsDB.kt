@@ -5,10 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.moviedb.data.local.dao.MoviesDao
-import com.example.moviedb.data.local.dao.PopularMoviesDao
-import com.example.moviedb.data.local.dao.TrendsDao
-import com.example.moviedb.data.local.dao.TvDao
+import com.example.moviedb.data.local.dao.*
+import com.example.moviedb.model.discover.DiscoverResult
+import com.example.moviedb.model.genre.Genre
 import com.example.moviedb.model.popular.PopularResult
 import com.example.moviedb.model.theathre.ResultMovie
 import com.example.moviedb.model.trendsOfDay.TrendResult
@@ -19,7 +18,8 @@ import com.example.moviedb.until.ListStringConverter
 @Database(entities = [ResultMovie::class,
     ResultTV::class,
     PopularResult::class,
-    TrendResult::class], version = 1, exportSchema = false)
+    TrendResult::class,
+    Genre::class], version = 1, exportSchema = false)
 @TypeConverters(ListIntConverter::class, ListStringConverter::class)
 abstract class FilmsDB: RoomDatabase() {
 
@@ -30,6 +30,8 @@ abstract class FilmsDB: RoomDatabase() {
     abstract fun getPopularMoviesDao():PopularMoviesDao
 
     abstract fun getTrendsDao():TrendsDao
+
+    abstract fun getGenreDao():GenreDao
 
     companion object{
         @Volatile

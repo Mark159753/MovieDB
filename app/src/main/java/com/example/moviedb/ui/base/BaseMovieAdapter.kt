@@ -1,14 +1,10 @@
-package com.example.moviedb.ui.home.adapter
+package com.example.moviedb.ui.base
 
-import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.R
-import com.example.moviedb.ui.home.adapter.viewHolders.HeadItemHolder
-import com.example.moviedb.ui.home.adapter.viewHolders.NetworkSrateHolder
 import com.example.moviedb.until.NetworkState
-import java.lang.IllegalStateException
 
 abstract class BaseMovieAdapter<T>(callback:DiffUtil.ItemCallback<T>)
     :PagedListAdapter<T, RecyclerView.ViewHolder>(callback){
@@ -31,7 +27,7 @@ abstract class BaseMovieAdapter<T>(callback:DiffUtil.ItemCallback<T>)
         }
     }
 
-    private fun hasExtraRow() = networkState != null && networkState != NetworkState.LOADED
+    protected fun hasExtraRow() = networkState != null && networkState != NetworkState.LOADED
 
     override fun getItemCount(): Int {
         return super.getItemCount() + if (hasExtraRow()) 1 else 0
