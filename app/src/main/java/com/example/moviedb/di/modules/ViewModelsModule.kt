@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.moviedb.di.ViewModelFactoryDI
 import com.example.moviedb.di.ViewModelKey
+import com.example.moviedb.ui.coming.fragment.ComingMovieViewModel
+import com.example.moviedb.ui.coming.fragment.ComingTvshowsViewModel
 import com.example.moviedb.ui.discover.DiscoverViewModel
 import com.example.moviedb.ui.home.HomeViewModel
 import dagger.Binds
@@ -22,6 +24,16 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(DiscoverViewModel::class)
     abstract fun bindDiscoverViewModel(model:DiscoverViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ComingMovieViewModel::class)
+    abstract fun bindComingMovieViewModel(model:ComingMovieViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ComingTvshowsViewModel::class)
+    abstract fun bindComingTvshowsViewModel(model:ComingTvshowsViewModel):ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory:ViewModelFactoryDI):ViewModelProvider.Factory
