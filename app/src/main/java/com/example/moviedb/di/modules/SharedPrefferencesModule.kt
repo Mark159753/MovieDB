@@ -9,6 +9,8 @@ import com.example.moviedb.data.repository.Repository
 import com.example.moviedb.data.repository.RepositoryImpl
 import com.example.moviedb.data.repository.discover.DiscoverRepository
 import com.example.moviedb.data.repository.discover.DiscoverRepositoryImpl
+import com.example.moviedb.data.repository.trends.TrendsRepository
+import com.example.moviedb.data.repository.trends.TrendsRepositoryImpl
 import com.example.moviedb.di.scope.FragmentScope
 import dagger.Module
 import dagger.Provides
@@ -37,5 +39,12 @@ object SharedPrefferencesModule {
     @Provides
     fun provideDiscoverRepository(apiServer:TMDBserver, ioExecutor: Executor, genreDao: GenreDao):DiscoverRepository{
         return DiscoverRepositoryImpl(apiServer, ioExecutor, genreDao)
+    }
+
+    @JvmStatic
+    @FragmentScope
+    @Provides
+    fun provideTrendRepository(apiServer:TMDBserver, ioExecutor: Executor, trendsDao:TrendsDao, preferences: SharedPreferences):TrendsRepository{
+        return TrendsRepositoryImpl(trendsDao, apiServer, ioExecutor, preferences)
     }
 }

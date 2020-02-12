@@ -41,7 +41,6 @@ class ComingItemViewHolder(view:View): RecyclerView.ViewHolder(view) {
                 }
             }
         }
-
     }
 
     companion object{

@@ -3,7 +3,6 @@ package com.example.moviedb.data.repository
 import android.content.SharedPreferences
 import android.text.format.DateUtils
 import android.util.Log
-import android.view.textclassifier.TextLanguage
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import com.example.moviedb.data.local.dao.MoviesDao
@@ -18,8 +17,8 @@ import com.example.moviedb.ui.home.paging.OnTvCallback
 import com.example.moviedb.model.theathre.InTheaterResponse
 import com.example.moviedb.model.tv.OnTvResponse
 import com.example.moviedb.model.theathre.ResultMovie
-import com.example.moviedb.model.trendsOfDay.TrendResult
-import com.example.moviedb.model.trendsOfDay.TrendsResponse
+import com.example.moviedb.model.trends.TrendResult
+import com.example.moviedb.model.trends.TrendsResponse
 import com.example.moviedb.model.tv.ResultTV
 import com.example.moviedb.until.Listening
 import retrofit2.Call
@@ -32,7 +31,6 @@ import javax.inject.Inject
 const val TIME_REQUEST_THEATER = "check_time_THEATER"
 const val TIME_REQUEST_TV = "TIME_REQUEST_TV"
 const val TIME_REQUEST_POPULAR = "TIME_REQUEST_POPULAR"
-const val TIME_REQUEST_TRENDS = "TIME_REQUEST_TRENDS"
 
 class RepositoryImpl @Inject constructor(
     private val moviesDao: MoviesDao,
@@ -191,46 +189,6 @@ class RepositoryImpl @Inject constructor(
     }
 
     //-----------------------------------------------------------------
-
-    override fun getTrendsOfQuantity(quantity: Int): LiveData<List<TrendResult>> {
-        val time = sharedPreferences.getLong(TIME_REQUEST_TRENDS, 0)
-
-        return if (time == 0L || isUpdateNeeded(Date(time), 3)){
-            loadTrendsOfDay()
-            trendsDao.getTrendsOfQuantity(quantity)
-        }else{
-            trendsDao.getTrendsOfQuantity(quantity)
-        }
-    }
-
-    private fun updateTrends(list: List<TrendResult>){
-        ioExecutor.execute {
-            trendsDao.clearTrends()
-            trendsDao.insert(list)
-        }
-    }
-
-    private fun loadTrendsOfDay(language: String = "uk-uk"){
-        apiServer.getMovieTrendsOfDay(language)
-            .enqueue(object :Callback<TrendsResponse>{
-                override fun onFailure(call: Call<TrendsResponse>, t: Throwable) {
-                    Log.e("ERROR LOAD TRENDS", t.message)
-                }
-
-                override fun onResponse(
-                    call: Call<TrendsResponse>,
-                    response: Response<TrendsResponse>
-                ) {
-                    if (response.isSuccessful){
-                        updateTrends(response.body()!!.results)
-                        saveCurrentTime(TIME_REQUEST_TRENDS)
-                    }else{
-                        Log.e("ERROR LOAD TRENDS", response.code().toString())
-                    }
-
-                }
-            })
-    }
 
 
 

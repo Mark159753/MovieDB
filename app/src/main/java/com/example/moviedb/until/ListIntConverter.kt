@@ -9,14 +9,14 @@ import java.lang.reflect.Type
 class ListIntConverter {
 
     @TypeConverter
-    fun fromList(list:List<Int>):String{
+    fun fromList(list:List<Int>?):String?{
         val gson = Gson()
-        return gson.toJson(list)
+        return if (list != null) gson.toJson(list) else null
     }
 
     @TypeConverter
-    fun toList(list:String):List<Int>{
+    fun toList(list:String?):List<Int>?{
         val listType: Type = object : TypeToken<ArrayList<Int?>?>() {}.type
-        return Gson().fromJson(list, listType)
+        return if (list != null) Gson().fromJson(list, listType) else null
     }
 }

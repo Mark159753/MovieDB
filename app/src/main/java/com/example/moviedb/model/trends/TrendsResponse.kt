@@ -1,4 +1,4 @@
-package com.example.moviedb.model.trendsOfDay
+package com.example.moviedb.model.trends
 
 
 import com.google.gson.annotations.SerializedName

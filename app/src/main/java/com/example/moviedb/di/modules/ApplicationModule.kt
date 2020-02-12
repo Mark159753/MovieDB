@@ -58,6 +58,13 @@ object ApplicationModule {
         return database.getGenreDao()
     }
 
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun providePersonMoviesDao(database:FilmsDB):PersonMoviesDao{
+        return database.getPersonMoviesDao()
+    }
+
 
     @JvmStatic
     @Singleton

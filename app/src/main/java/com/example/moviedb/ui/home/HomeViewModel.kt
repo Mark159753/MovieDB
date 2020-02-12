@@ -2,10 +2,12 @@ package com.example.moviedb.ui.home
 
 import androidx.lifecycle.ViewModel
 import com.example.moviedb.data.repository.Repository
+import com.example.moviedb.data.repository.trends.TrendsRepository
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    private val trendsRepository: TrendsRepository
 ) : ViewModel() {
 
     private val moviesListResult = repository.getHeadInTheatre(20)
@@ -20,7 +22,7 @@ class HomeViewModel @Inject constructor(
 
     val popularMovies = repository.getPopularMovies()
 
-    val trendsOfDay = repository.getTrendsOfQuantity(3)
+    val trendsOfDay = trendsRepository.getTrendsOfQuantity(3)
 
     fun refreshTv(){
         repository.refreshTvList()

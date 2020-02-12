@@ -8,6 +8,7 @@ import com.example.moviedb.ui.coming.fragment.ComingMovieViewModel
 import com.example.moviedb.ui.coming.fragment.ComingTvshowsViewModel
 import com.example.moviedb.ui.discover.DiscoverViewModel
 import com.example.moviedb.ui.home.HomeViewModel
+import com.example.moviedb.ui.trendsMore.TrendsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -34,6 +35,11 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(ComingTvshowsViewModel::class)
     abstract fun bindComingTvshowsViewModel(model:ComingTvshowsViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TrendsViewModel::class)
+    abstract fun bindTrendsViewModel(model:TrendsViewModel):ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory:ViewModelFactoryDI):ViewModelProvider.Factory

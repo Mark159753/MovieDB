@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.moviedb.ui.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_trendActivity"
+            app:destination="@id/trendActivity" />
+    </fragment>
     <fragment
         android:id="@+id/discoverFragment"
         android:name="com.example.moviedb.ui.discover.DiscoverFragment"
@@ -20,4 +24,9 @@
         android:name="com.example.moviedb.ui.coming.ComingFragment"
         android:label="coming_fragment"
         tools:layout="@layout/coming_fragment" />
+    <activity
+        android:id="@+id/trendActivity"
+        android:name="com.example.moviedb.ui.trendsMore.TrendActivity"
+        android:label="activity_trend"
+        tools:layout="@layout/activity_trend" />
 </navigation>

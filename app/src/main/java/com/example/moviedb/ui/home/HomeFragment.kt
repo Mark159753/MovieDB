@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.example.moviedb.MovieApp
 
 import com.example.moviedb.R
@@ -56,7 +57,7 @@ class HomeFragment : Fragment() {
         initInTheatreAdapter()
         initOnTvAdapter()
         initPopularMovies()
-
+        initOpenMoreTrendsBtn()
     }
 
 
@@ -134,6 +135,12 @@ class HomeFragment : Fragment() {
                 pageMargin = 24
             }
         })
+    }
+
+    private fun initOpenMoreTrendsBtn(){
+        binding.homeMoreBtn.setOnClickListener {
+            it.findNavController().navigate(R.id.action_homeFragment_to_trendActivity)
+        }
     }
 
 }
