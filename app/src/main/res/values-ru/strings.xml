@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MovieDB</string>
+    <string name="LangSummary">Изменить язык интерфейса</string>
+    <string name="LangTitle">Язык</string>
+    <string name="all_trend_type">Все</string>
+    <string name="cancel">Отмена</string>
+    <string name="coming_menu">Скоро</string>
+    <string name="coming_pager_movie">Кино</string>
+    <string name="coming_pager_shows">Сериалы</string>
+    <string name="dialogTitle">Выберите язык</string>
+    <string name="discover_filter">Фильтер</string>
+    <string name="discover_menu">Открывай</string>
+    <string name="gender_man">Мужчина</string>
+    <string name="gender_woman">Женщина</string>
+    <string name="home_menu">Дом</string>
+    <string name="in_theaters_tab">В Кино</string>
+    <string name="more_home">Больше</string>
+    <string name="movies_trend_type">Кино</string>
+    <string name="on_tv_tab">По Телевизору</string>
+    <string name="person_trend_type">Люди</string>
+    <string name="search_hint">Искать кино, сериалы, людей</string>
+    <string name="settings">Настройки</string>
+    <string name="trend_this_week">Этой Недели</string>
+    <string name="trend_today">Сегодня</string>
+    <string name="trending_home">В Тренде</string>
+    <string name="tv_shows_trend_type">Сериалы</string>
+    <string name="with_genre">Из жанром</string>
+    <string name="without_genre">Без жанра</string>
+</resources>

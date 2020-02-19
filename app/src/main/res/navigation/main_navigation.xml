@@ -29,4 +29,8 @@
         android:name="com.example.moviedb.ui.trendsMore.TrendActivity"
         android:label="activity_trend"
         tools:layout="@layout/activity_trend" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.moviedb.ui.preferences.Settings"
+        android:label="Settings" />
 </navigation>

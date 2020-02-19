@@ -18,6 +18,7 @@ import com.example.moviedb.ui.MainActivity
 import com.example.moviedb.ui.discover.adapter.DiscoverListAdapter
 import com.example.moviedb.ui.discover.adapter.DiscoverMarginDecoarator
 import com.example.moviedb.until.Listening
+import com.example.moviedb.until.LocaleHelper
 import kotlinx.android.synthetic.main.discover_fragment.*
 import java.util.*
 import javax.inject.Inject
@@ -77,7 +78,8 @@ class DiscoverFragment : Fragment(), FilterDialog.FilterDialogListener{
                     without_genres = withoutGenre,
                     with_genres = withGenre,
                     primary_release_date_from = dateFrom,
-                    primary_release_date_to = dateTo)
+                    primary_release_date_to = dateTo,
+                    language = LocaleHelper.getLanguage(activity!!))
                 updateDiscoverListData(res)
             }
 
@@ -148,7 +150,8 @@ class DiscoverFragment : Fragment(), FilterDialog.FilterDialogListener{
             with_genres = this.withGenre,
             without_genres = this.withoutGenre,
             primary_release_date_from = dateFrom,
-            primary_release_date_to = dateTo)
+            primary_release_date_to = dateTo,
+            language = LocaleHelper.getLanguage(activity!!))
         updateDiscoverListData(res)
     }
 }

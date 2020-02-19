@@ -4,23 +4,10 @@ import android.content.SharedPreferences
 import android.text.format.DateUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.paging.LivePagedListBuilder
-import com.example.moviedb.data.local.dao.MoviesDao
 import com.example.moviedb.data.local.dao.PopularMoviesDao
-import com.example.moviedb.data.local.dao.TrendsDao
-import com.example.moviedb.data.local.dao.TvDao
 import com.example.moviedb.data.network.TMDBserver
 import com.example.moviedb.model.popular.PopularResult
 import com.example.moviedb.model.popular.ResponsePopular
-import com.example.moviedb.ui.home.paging.InTheatreCallback
-import com.example.moviedb.ui.home.paging.OnTvCallback
-import com.example.moviedb.model.theathre.InTheaterResponse
-import com.example.moviedb.model.tv.OnTvResponse
-import com.example.moviedb.model.theathre.ResultMovie
-import com.example.moviedb.model.trends.TrendResult
-import com.example.moviedb.model.trends.TrendsResponse
-import com.example.moviedb.model.tv.ResultTV
-import com.example.moviedb.until.Listening
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,131 +15,21 @@ import java.util.*
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
-const val TIME_REQUEST_THEATER = "check_time_THEATER"
-const val TIME_REQUEST_TV = "TIME_REQUEST_TV"
 const val TIME_REQUEST_POPULAR = "TIME_REQUEST_POPULAR"
 
 class RepositoryImpl @Inject constructor(
-    private val moviesDao: MoviesDao,
-    private val tvDao:TvDao,
     private val popularMoviesDao: PopularMoviesDao,
-    private val trendsDao: TrendsDao,
     private val apiServer:TMDBserver,
     private val ioExecutor:Executor,
     private val sharedPreferences: SharedPreferences
 ):Repository {
 
 
-    override fun getHeadInTheatre(pageSize: Int): Listening<ResultMovie> {
-        val boundaryCallback = InTheatreCallback(
-            apiServer,
-            ioExecutor,
-            this::insertMovieResultIntoDb,
-            this::calculateMoviePage,
-            "uk-uk"
-        )
-
-        val livePagedList = LivePagedListBuilder<Int, ResultMovie>(moviesDao.getMovies(), pageSize)
-            .setBoundaryCallback(boundaryCallback)
-            .build()
-
-        return Listening<ResultMovie>(
-            pagedList = livePagedList,
-            networkState = boundaryCallback.networkState
-        )
-    }
-
-    override fun refreshMoviesList() {
-        val time = sharedPreferences.getLong(TIME_REQUEST_THEATER, 0)
-
-        if (time == 0L) {
-            clearMovieDB()
-            return
-        }
-
-        if (isUpdateNeeded(Date(time), 3)){
-            clearMovieDB()
-        }
-    }
-
-    private fun insertMovieResultIntoDb(body: InTheaterResponse?){
-        body?.results?.let {
-            moviesDao.insert(it)
-        }
-    }
-
-    private fun calculateMoviePage():Int {
-        val size = moviesDao.getTableSize()
-        return size/20 +1
-    }
-
-    private fun clearMovieDB(){
-        ioExecutor.execute {
-            moviesDao.cleareMovies()
-            saveCurrentTime(TIME_REQUEST_THEATER)
-        }
-    }
-
-    // ----------------------------------------------------------------
-
-
-    override fun getHeadOnTv(pageSize: Int): Listening<ResultTV> {
-        val boundaryCallback = OnTvCallback(
-            apiServer,
-            ioExecutor,
-            this::insertTvResultIntoDb,
-            this::calculateTvPage,
-            "uk-uk"
-        )
-
-        val livePagedList = LivePagedListBuilder<Int, ResultTV>(tvDao.getMovies(), pageSize)
-            .setBoundaryCallback(boundaryCallback)
-            .build()
-        return Listening(
-            livePagedList,
-            boundaryCallback.networkState
-        )
-    }
-
-    override fun refreshTvList() {
-        val time = sharedPreferences.getLong(TIME_REQUEST_TV, 0)
-
-        if (time == 0L) {
-            clearTvDB()
-            return
-        }
-
-        if (isUpdateNeeded(Date(time), 3)){
-            clearTvDB()
-        }
-    }
-
-    private fun clearTvDB(){
-        ioExecutor.execute {
-            tvDao.clearMovies()
-            saveCurrentTime(TIME_REQUEST_TV)
-        }
-    }
-
-    private fun calculateTvPage():Int {
-        val size = tvDao.getTableSize()
-        return size/20 +1
-    }
-
-    private fun insertTvResultIntoDb(body: OnTvResponse?){
-        body?.results?.let {
-            tvDao.insert(it)
-        }
-    }
-
-    //---------------------------------------------
-
-
-    override fun getPopularMovies(): LiveData<List<PopularResult>> {
+    override fun getPopularMovies(language:String): LiveData<List<PopularResult>> {
         val time = sharedPreferences.getLong(TIME_REQUEST_POPULAR, 0)
 
         if (time == 0L || isUpdateNeeded(Date(time), 3)){
-            loadPopularMovies()
+            loadPopularMovies(language)
             return popularMoviesDao.getAllPopularMovies()
         }else{
             return popularMoviesDao.getAllPopularMovies()
@@ -167,11 +44,11 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    private fun loadPopularMovies(){
-        apiServer.getMoviesPopular("uk-uk")
+    override fun loadPopularMovies(language:String){
+        apiServer.getMoviesPopular(language)
             .enqueue(object :Callback<ResponsePopular>{
                 override fun onFailure(call: Call<ResponsePopular>, t: Throwable) {
-                    Log.e("ERROR LOAD POPULAR", t.message)
+                    Log.e("ERROR LOAD POPULAR", t.message ?: "unknown")
                 }
 
                 override fun onResponse(

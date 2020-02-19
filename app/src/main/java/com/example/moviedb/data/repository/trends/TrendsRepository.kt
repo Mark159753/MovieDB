@@ -17,7 +17,9 @@ interface TrendsRepository {
         const val WEEK_TIME_WINDOW = "week"
     }
 
-    fun getTrendsOfQuantity(quantity: Int): LiveData<List<TrendResult>>
+    fun getTrendsOfQuantity(quantity: Int, language:String): LiveData<List<TrendResult>>
+
+    fun loadTrendsOfType(language: String = "uk-uk", mediaType: String, timeRequest:String)
 
     fun getTrendsOfMediaType(language: String, mediaType: String, timeWindow:String): Listening<TrendResult>
 }

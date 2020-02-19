@@ -46,6 +46,7 @@ class ComingMovieFragment : Fragment() {
 
     private fun initList(){
         val mAdapter = ComingMoviesAdapter()
+        mAdapter.currentList?.dataSource?.invalidate()
         viewModel.refreshMovies()
         coming_movie_list.apply {
             adapter = mAdapter
@@ -55,7 +56,7 @@ class ComingMovieFragment : Fragment() {
         viewModel.resultMovies.observe(viewLifecycleOwner, Observer {
             mAdapter.submitList(it)
         })
-        viewModel.networkStateMovie.observe(viewLifecycleOwner, Observer {
+        viewModel.networkStateMovie.observe(activity!!, Observer {
             mAdapter.setNetworkState(it)
         })
         viewModel.getGenres().observe(viewLifecycleOwner, Observer {

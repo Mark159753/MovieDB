@@ -28,11 +28,11 @@ class TrendsRepositoryImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ): TrendsRepository {
 
-    override fun getTrendsOfQuantity(quantity: Int): LiveData<List<TrendResult>> {
+    override fun getTrendsOfQuantity(quantity: Int, language:String): LiveData<List<TrendResult>> {
         val time = sharedPreferences.getLong(TrendsRepository.TIME_REQUEST_TRENDS_MOVIE, 0)
 
         return if (time == 0L || isUpdateNeeded(Date(time), 3)){
-            loadTrendsOfType(language = "uk-uk", mediaType = "movie", timeRequest = TrendsRepository.TIME_REQUEST_TRENDS_MOVIE)
+            loadTrendsOfType(language = language, mediaType = "movie", timeRequest = TrendsRepository.TIME_REQUEST_TRENDS_MOVIE)
             trendsDao.getTrendsOfQuantity(quantity, "movie")
         }else{
             trendsDao.getTrendsOfQuantity(quantity, "movie")
@@ -62,7 +62,7 @@ class TrendsRepositoryImpl @Inject constructor(
     }
 
 
-    private fun loadTrendsOfType(language: String = "uk-uk", mediaType: String, timeRequest:String){
+    override fun loadTrendsOfType(language: String, mediaType: String, timeRequest:String){
         apiServer.getMovieTrends(language = language, media_type = mediaType)
             .enqueue(object : Callback<TrendsResponse> {
                 override fun onFailure(call: Call<TrendsResponse>, t: Throwable) {

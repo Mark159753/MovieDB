@@ -29,16 +29,16 @@ object SharedPrefferencesModule {
     @JvmStatic
     @FragmentScope
     @Provides
-    fun provideRepository(dao: MoviesDao, tvDao: TvDao, popularMoviesDao: PopularMoviesDao,
-                          trendsDao: TrendsDao, server: TMDBserver, ioExecutor: Executor, preferences: SharedPreferences): Repository {
-        return RepositoryImpl(dao, tvDao, popularMoviesDao, trendsDao, server, ioExecutor, preferences)
+    fun provideRepository(popularMoviesDao: PopularMoviesDao,
+                          server: TMDBserver, ioExecutor: Executor, preferences: SharedPreferences): Repository {
+        return RepositoryImpl(popularMoviesDao, server, ioExecutor, preferences)
     }
 
     @JvmStatic
     @FragmentScope
     @Provides
-    fun provideDiscoverRepository(apiServer:TMDBserver, ioExecutor: Executor, genreDao: GenreDao):DiscoverRepository{
-        return DiscoverRepositoryImpl(apiServer, ioExecutor, genreDao)
+    fun provideDiscoverRepository(context: Context, apiServer:TMDBserver, ioExecutor: Executor, genreDao: GenreDao):DiscoverRepository{
+        return DiscoverRepositoryImpl(context, apiServer, ioExecutor, genreDao)
     }
 
     @JvmStatic

@@ -127,7 +127,7 @@ class HomeFragment : Fragment() {
 
     private fun initPopularMovies(){
         viewModel.popularMovies.observe(viewLifecycleOwner, Observer {
-            if (it == null) return@Observer
+            if (it.isEmpty()) viewModel.loadPopularMovies()
             binding.popularProgressBar.visibility = View.GONE
             binding.popularSlider.apply {
                 visibility = View.VISIBLE

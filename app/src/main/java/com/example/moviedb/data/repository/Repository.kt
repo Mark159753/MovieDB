@@ -9,14 +9,8 @@ import com.example.moviedb.until.Listening
 
 interface Repository {
 
-    fun getHeadInTheatre(pageSize:Int):Listening<ResultMovie>
+    fun loadPopularMovies(language:String)
 
-    fun refreshMoviesList()
-
-    fun getHeadOnTv(pageSize: Int):Listening<ResultTV>
-
-    fun refreshTvList()
-
-    fun getPopularMovies():LiveData<List<PopularResult>>
+    fun getPopularMovies(language:String):LiveData<List<PopularResult>>
 
 }

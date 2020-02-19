@@ -1,10 +1,12 @@
 package com.example.moviedb.ui.home.paging
 
+import android.content.Context
 import com.example.moviedb.data.network.TMDBserver
 import com.example.moviedb.model.tv.OnTvResponse
 import com.example.moviedb.model.tv.ResultTV
 import com.example.moviedb.ui.base.BasePagingCallback
 import com.example.moviedb.ui.base.PagingRequestHelper
+import com.example.moviedb.until.LocaleHelper
 import java.util.concurrent.Executor
 
 class OnTvCallback(
@@ -12,12 +14,12 @@ class OnTvCallback(
     private val ioExecutor: Executor,
     private val handlerResponse: (OnTvResponse?) -> Unit,
     private val hadleNextPage: () -> Int,
-    private val language:String
+    private val context: Context
 ): BasePagingCallback<ResultTV, OnTvResponse>(ioExecutor, handlerResponse) {
 
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL){
-            apiServer.getOnTv(language)
+            apiServer.getOnTv(LocaleHelper.getLanguage(context))
                 .enqueue(createWebserviceCallback(it))
         }
     }
@@ -26,7 +28,7 @@ class OnTvCallback(
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER){
             ioExecutor.execute {
                 val page = hadleNextPage.invoke()
-                apiServer.getOnTv(language, page)
+                apiServer.getOnTv(LocaleHelper.getLanguage(context), page)
                     .enqueue(createWebserviceCallback(it))
             }
         }

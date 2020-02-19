@@ -20,7 +20,7 @@ import com.example.moviedb.until.ListStringConverter
     PopularResult::class,
     TrendResult::class,
     Genre::class,
-    KnownFor::class], version = 3, exportSchema = true)
+    KnownFor::class], version = 3, exportSchema = false)
 @TypeConverters(ListIntConverter::class, ListStringConverter::class)
 abstract class FilmsDB: RoomDatabase() {
 

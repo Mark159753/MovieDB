@@ -1,5 +1,6 @@
 package com.example.moviedb.ui.trendsMore
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import com.example.moviedb.data.repository.trends.TrendsRepository
 import com.example.moviedb.di.ViewModelFactoryDI
 import com.example.moviedb.ui.trendsMore.adapter.TrendRCDecorator
 import com.example.moviedb.ui.trendsMore.adapter.TrendsOfDayRCAdapter
+import com.example.moviedb.until.LocaleHelper
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_trend.*
 import javax.inject.Inject
@@ -31,6 +33,10 @@ class TrendActivity : AppCompatActivity() {
     private lateinit var weekListAdapter:TrendsOfDayRCAdapter
 
     private var mediaType = TrendsRepository.TREND_ALL_TYPE
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase!!, LocaleHelper.getLanguage(newBase)))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +55,6 @@ class TrendActivity : AppCompatActivity() {
         initTrendMenu()
         initTodayList()
         initWeekList()
-
     }
 
     private fun initTrendMenu(){
@@ -130,7 +135,7 @@ class TrendActivity : AppCompatActivity() {
     }
 
     private fun updateTrendWeekListData(){
-        val data = viewModel.getTrendsOfType(this.mediaType, "uk-uk", TrendsRepository.WEEK_TIME_WINDOW)
+        val data = viewModel.getTrendsOfType(this.mediaType, LocaleHelper.getLanguage(this), TrendsRepository.WEEK_TIME_WINDOW)
         data.pagedList.observe(this, Observer {
             weekListAdapter.submitList(it)
         })
@@ -143,7 +148,7 @@ class TrendActivity : AppCompatActivity() {
     }
 
     private fun updateTrendListData(){
-        val data = viewModel.getTrendsOfType(this.mediaType, "uk=uk", TrendsRepository.DAY_TIME_WINDOW)
+        val data = viewModel.getTrendsOfType(this.mediaType, LocaleHelper.getLanguage(this), TrendsRepository.DAY_TIME_WINDOW)
        data.pagedList.observe(this, Observer {
             todayListAdapter.submitList(it)
         })

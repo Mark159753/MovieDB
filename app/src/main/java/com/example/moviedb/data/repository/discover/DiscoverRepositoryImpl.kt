@@ -1,5 +1,6 @@
 package com.example.moviedb.data.repository.discover
 
+import android.content.Context
 import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
@@ -13,6 +14,7 @@ import com.example.moviedb.model.genre.Genre
 import com.example.moviedb.model.genre.GenreResponse
 import com.example.moviedb.ui.discover.paging.DataSourceFactory
 import com.example.moviedb.until.Listening
+import com.example.moviedb.until.LocaleHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,6 +22,7 @@ import java.util.*
 import java.util.concurrent.Executor
 
 class DiscoverRepositoryImpl(
+    private val context: Context,
     private val apiServer:TMDBserver,
     private val networkExecutor: Executor,
     private val genreDao: GenreDao
@@ -64,7 +67,7 @@ class DiscoverRepositoryImpl(
     }
 
     private fun loadGenres(){
-        apiServer.getGenreList().enqueue(object : Callback<GenreResponse>{
+        apiServer.getGenreList(LocaleHelper.getLanguage(context)).enqueue(object : Callback<GenreResponse>{
             override fun onFailure(call: Call<GenreResponse>, t: Throwable) {
                 Log.e("GENRES LOADING ERROR", t.message ?: "unknown error")
             }
