@@ -5,6 +5,7 @@ import com.example.moviedb.di.modules.SharedPrefferencesModule
 import com.example.moviedb.di.scope.FragmentScope
 import com.example.moviedb.ui.coming.fragment.ComingMovieFragment
 import com.example.moviedb.ui.coming.fragment.ComingTVShowsFragment
+import com.example.moviedb.ui.detaile.MovieDetailActivity
 import com.example.moviedb.ui.discover.DiscoverFragment
 import com.example.moviedb.ui.home.HomeFragment
 import com.example.moviedb.ui.trendsMore.TrendActivity
@@ -24,6 +25,8 @@ interface FragmentComponent {
     fun inject(main:ComingTVShowsFragment)
 
     fun inject(main:TrendActivity)
+
+    fun inject(main:MovieDetailActivity)
 
     @Subcomponent.Factory
     interface Factory{

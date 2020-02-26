@@ -12,9 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.trendsMore.TrendActivity"></activity>
-        <activity android:name=".ui.MainActivity"
-                    android:configChanges="locale">
+        <activity
+            android:name=".ui.youTube.YoutubeActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".ui.detaile.MovieDetailActivity"
+            android:label="@string/title_activity_movie_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.trendsMore.TrendActivity" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:configChanges="locale">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

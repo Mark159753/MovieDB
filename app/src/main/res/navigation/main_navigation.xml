@@ -13,17 +13,28 @@
         <action
             android:id="@+id/action_homeFragment_to_trendActivity"
             app:destination="@id/trendActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_movieDetailActivity"
+            app:destination="@id/movieDetailActivity" />
     </fragment>
     <fragment
         android:id="@+id/discoverFragment"
         android:name="com.example.moviedb.ui.discover.DiscoverFragment"
         android:label="discover_fragment"
-        tools:layout="@layout/discover_fragment" />
+        tools:layout="@layout/discover_fragment" >
+        <action
+            android:id="@+id/action_discoverFragment_to_movieDetailActivity"
+            app:destination="@id/movieDetailActivity" />
+    </fragment>
     <fragment
         android:id="@+id/comingFragment"
         android:name="com.example.moviedb.ui.coming.ComingFragment"
         android:label="coming_fragment"
-        tools:layout="@layout/coming_fragment" />
+        tools:layout="@layout/coming_fragment" >
+        <action
+            android:id="@+id/action_comingFragment_to_movieDetailActivity"
+            app:destination="@id/movieDetailActivity" />
+    </fragment>
     <activity
         android:id="@+id/trendActivity"
         android:name="com.example.moviedb.ui.trendsMore.TrendActivity"
@@ -32,5 +43,17 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.moviedb.ui.preferences.Settings"
-        android:label="Settings" />
+        android:label="Settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_movieDetailActivity"
+            app:destination="@id/movieDetailActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/movieDetailActivity"
+        android:name="com.example.moviedb.ui.detaile.MovieDetailActivity"
+        android:label="MovieDetailActivity" >
+        <argument
+            android:name="media_id"
+            app:argType="integer" />
+    </activity>
 </navigation>

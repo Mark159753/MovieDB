@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -18,7 +20,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.incremental":"true"]
+                arguments = ["room.incremental": "true"]
             }
         }
     }
@@ -110,9 +112,13 @@ dependencies {
     //Android Material Design Library
     implementation 'com.google.android.material:material:1.1.0'
 
+    //MotionLayout
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
+
     // Infinity ViewPager
     implementation 'com.asksira.android:loopingviewpager:1.2.0'
 
     //ExpandableCheckRecyclerView
     implementation 'com.thoughtbot:expandablecheckrecyclerview:1.4'
+
 }

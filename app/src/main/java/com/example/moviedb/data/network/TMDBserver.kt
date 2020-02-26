@@ -1,8 +1,13 @@
 package com.example.moviedb.data.network
 
+import androidx.lifecycle.LiveData
+import com.example.moviedb.model.cast.CastResponse
 import com.example.moviedb.model.discover.DiscoverResponse
 import com.example.moviedb.model.genre.GenreResponse
+import com.example.moviedb.model.movieDetail.MovieDetailResponse
+import com.example.moviedb.model.movieVideo.VideoResponse
 import com.example.moviedb.model.popular.ResponsePopular
+import com.example.moviedb.model.similarMovies.SimilarMoviesResponse
 import com.example.moviedb.model.theathre.InTheaterResponse
 import com.example.moviedb.model.trends.TrendsResponse
 import com.example.moviedb.model.tv.OnTvResponse
@@ -63,6 +68,32 @@ interface TMDBserver {
     fun getGenreList(
         @Query("language") language:String = "en_US"
     ):Call<GenreResponse>
+
+    @GET("movie/{movie_id}")
+    fun getMovieDetails(
+        @Path("movie_id") movie_id:Int,
+        @Query("language") language:String = "en_US"
+    ):Call<MovieDetailResponse>
+
+    @GET("/3/movie/{movie_id}/credits")
+    fun getMovieCast(
+        @Path("movie_id") movie_id:Int,
+        @Query("language") language:String = "en_US"
+    ):Call<CastResponse>
+
+    @GET("movie/{movie_id}/similar")
+    fun getSimilarMovies(
+        @Path("movie_id") movie_id:Int,
+        @Query("language") language:String = "en_US",
+        @Query("page") page:Int = 1
+    ):Call<SimilarMoviesResponse>
+
+    @GET("movie/{movie_id}/videos")
+        fun getMovieVideos(
+            @Path("movie_id") movie_id:Int,
+            @Query("language") language:String = "en_US"
+        ):Call<VideoResponse>
+
 
     companion object{
         operator fun invoke():TMDBserver{

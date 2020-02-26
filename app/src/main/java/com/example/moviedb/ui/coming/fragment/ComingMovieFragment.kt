@@ -56,9 +56,10 @@ class ComingMovieFragment : Fragment() {
         viewModel.resultMovies.observe(viewLifecycleOwner, Observer {
             mAdapter.submitList(it)
         })
-        viewModel.networkStateMovie.observe(activity!!, Observer {
-            mAdapter.setNetworkState(it)
-        })
+        // Found some Problem need to fixed
+//        viewModel.networkStateMovie.observe(activity!!, Observer {
+//            mAdapter.setNetworkState(it)
+//        })
         viewModel.getGenres().observe(viewLifecycleOwner, Observer {
             mAdapter.setGenres(it)
         })

@@ -6,6 +6,7 @@ import com.example.moviedb.di.ViewModelFactoryDI
 import com.example.moviedb.di.ViewModelKey
 import com.example.moviedb.ui.coming.fragment.ComingMovieViewModel
 import com.example.moviedb.ui.coming.fragment.ComingTvshowsViewModel
+import com.example.moviedb.ui.detaile.MovieDetailViewModel
 import com.example.moviedb.ui.discover.DiscoverViewModel
 import com.example.moviedb.ui.home.HomeViewModel
 import com.example.moviedb.ui.trendsMore.TrendsViewModel
@@ -40,6 +41,11 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(TrendsViewModel::class)
     abstract fun bindTrendsViewModel(model:TrendsViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MovieDetailViewModel::class)
+    abstract fun bindMovieDetailViewModel(model:MovieDetailViewModel):ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory:ViewModelFactoryDI):ViewModelProvider.Factory

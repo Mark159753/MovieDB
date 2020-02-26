@@ -15,7 +15,7 @@ class MovieRvAdapter : BaseMovieAdapter<ResultMovie>(COMPERATOR){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
-            R.layout.head_film_item -> HeadItemHolder.create(parent)
+            R.layout.head_film_item -> HeadItemHolder.create(parent, listener)
             R.layout.network_state_head_item -> NetworkSrateHolder.create(parent)
             else -> throw IllegalStateException("unknown view type $viewType")
         }

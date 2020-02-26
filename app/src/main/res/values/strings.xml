@@ -35,4 +35,10 @@
     <string name="tv_shows_trend_type">TV Shows</string>
     <string name="person_trend_type">Person</string>
     <string name="settings">Settings</string>
+    <string name="title_activity_movie_detail" translatable="false">MovieDetailActivity</string>
+    <string name="detail_overview">OverView</string>
+    <string name="detail_top_billed_cast">Top Billed Cast</string>
+    <string name="detail_loading_error">Loading Error</string>
+    <string name="detail_similar_movies">Similar Movies</string>
+    <string name="missing_video">Video is Missing</string>
 </resources>

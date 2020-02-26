@@ -27,4 +27,9 @@
     <string name="tv_shows_trend_type">Серіали</string>
     <string name="with_genre">З жанрами</string>
     <string name="without_genre">Без жанру</string>
+    <string name="detail_loading_error">Помилка Завантаження</string>
+    <string name="detail_overview">Перегляд</string>
+    <string name="detail_top_billed_cast">Аксторський Склад</string>
+    <string name="detail_similar_movies">Схожі Фільми</string>
+    <string name="missing_video">Відео відсутнє</string>
 </resources>

@@ -10,6 +10,11 @@ abstract class BaseMovieAdapter<T>(callback:DiffUtil.ItemCallback<T>)
     :PagedListAdapter<T, RecyclerView.ViewHolder>(callback){
 
     internal var networkState: NetworkState? = null
+    internal var listener:OnShowMovieSelectedListener? = null
+
+    fun setListener(listener:OnShowMovieSelectedListener){
+        this.listener = listener
+    }
 
     fun setNetworkState(newNetworkState: NetworkState?) {
         val previousState = this.networkState

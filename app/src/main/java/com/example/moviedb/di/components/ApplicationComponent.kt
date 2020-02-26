@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.moviedb.di.modules.ApplicationModule
 import com.example.moviedb.di.modules.ViewModelsModule
 import com.example.moviedb.ui.MainActivity
+import com.example.moviedb.ui.detaile.MovieDetailActivity
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton

@@ -7,6 +7,8 @@ import com.example.moviedb.data.local.dao.*
 import com.example.moviedb.data.network.TMDBserver
 import com.example.moviedb.data.repository.Repository
 import com.example.moviedb.data.repository.RepositoryImpl
+import com.example.moviedb.data.repository.detail.MovieDetailRepository
+import com.example.moviedb.data.repository.detail.MovieDetailRepositoryImpl
 import com.example.moviedb.data.repository.paging.PagingRepository
 import com.example.moviedb.data.repository.paging.PagingRepositoryImpl
 import com.example.moviedb.di.scope.FragmentScope
@@ -35,6 +37,12 @@ object ApplicationModule {
         return PagingRepositoryImpl(moviesDao, tvDao, context, server, ioExecutor)
     }
 
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideDetailRepository(server: TMDBserver):MovieDetailRepository{
+        return MovieDetailRepositoryImpl(server)
+    }
 
     @JvmStatic
     @Singleton

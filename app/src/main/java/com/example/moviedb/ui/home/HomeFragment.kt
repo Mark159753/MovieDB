@@ -7,8 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.findNavController
 import com.example.moviedb.MovieApp
 
@@ -16,6 +21,7 @@ import com.example.moviedb.R
 import com.example.moviedb.databinding.HomeFragmentBinding
 import com.example.moviedb.di.ViewModelFactoryDI
 import com.example.moviedb.ui.MainActivity
+import com.example.moviedb.ui.base.OnShowMovieSelectedListener
 import com.example.moviedb.ui.home.adapter.MarginDecorator
 import com.example.moviedb.ui.home.adapter.MovieRvAdapter
 import com.example.moviedb.ui.home.adapter.PopularMoviesPagerAdapter
@@ -24,7 +30,7 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.home_fragment.*
 import javax.inject.Inject
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), OnShowMovieSelectedListener {
 
     private lateinit var binding:HomeFragmentBinding
 
@@ -94,6 +100,7 @@ class HomeFragment : Fragment() {
 
     private fun initInTheatreAdapter(){
         val mAdapter =  MovieRvAdapter()
+        mAdapter.setListener(this)
         viewModel.refreshMovies()
         in_theater_list.apply {
             adapter = mAdapter
@@ -110,6 +117,7 @@ class HomeFragment : Fragment() {
 
     private fun initOnTvAdapter(){
         val mAdapter = TvRvAdapter()
+        mAdapter.setListener(this)
         viewModel.refreshTv()
         binding.onTvList.apply {
             adapter = mAdapter
@@ -135,6 +143,30 @@ class HomeFragment : Fragment() {
                 pageMargin = 24
             }
         })
+    }
+
+    override fun onItemSelected(view: View, id: Int, contentType: Int) {
+        Log.e("ID", id.toString())
+        when(contentType){
+            OnShowMovieSelectedListener.MOVIE_TYPE -> Log.e("TYPE", "MOVIE")
+            OnShowMovieSelectedListener.TV_SHOW_TYPE -> Log.e("TYPE", "TV_SHOW_SHOW")
+            OnShowMovieSelectedListener.PERSON_TYPE -> Log.e("TYPE", "PERSON")
+        }
+
+        when(contentType){
+            OnShowMovieSelectedListener.MOVIE_TYPE -> {
+                val direction = HomeFragmentDirections.actionHomeFragmentToMovieDetailActivity(id)
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,
+                    Pair(view.findViewById<ImageView>(R.id.head_poster_img), "headPoster$id"),
+                    Pair(view.findViewById<TextView>(R.id.movie_title), "headTitle$id"),
+                    Pair(view.findViewById<TextView>(R.id.movie_title), "headTitle$id")
+                )
+                val extras = ActivityNavigator.Extras.Builder().setActivityOptions(option).build()
+                view.findNavController().navigate(direction, extras)
+            }
+            OnShowMovieSelectedListener.TV_SHOW_TYPE -> {}
+            OnShowMovieSelectedListener.PERSON_TYPE -> {}
+        }
     }
 
     private fun initOpenMoreTrendsBtn(){
