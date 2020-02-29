@@ -41,4 +41,7 @@
     <string name="detail_loading_error">Loading Error</string>
     <string name="detail_similar_movies">Similar Movies</string>
     <string name="missing_video">Video is Missing</string>
+    <string name="person_biography">Biography</string>
+    <string name="person_yesrs_old">years old</string>
+    <string name="person_known_for">Known For</string>
 </resources>

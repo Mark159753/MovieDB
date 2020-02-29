@@ -1,12 +1,15 @@
 package com.example.moviedb.ui.detaile
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.transition.Transition
 import android.util.Log
+import android.util.Pair
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -19,24 +22,24 @@ import com.example.moviedb.MovieApp
 import com.example.moviedb.R
 import com.example.moviedb.databinding.ActivityMovieDetailBinding
 import com.example.moviedb.di.ViewModelFactoryDI
+import com.example.moviedb.ui.base.OnShowMovieSelectedListener
 import com.example.moviedb.ui.detaile.adapter.CastRcAdapter
 import com.example.moviedb.ui.detaile.adapter.SimilarRCAdapter
 import com.example.moviedb.ui.home.adapter.MarginDecorator
+import com.example.moviedb.ui.person.PersonActivity
 import com.example.moviedb.ui.youTube.YoutubeActivity
 import com.example.moviedb.until.LocaleHelper
 import com.example.moviedb.until.NetworkState
 
 import kotlinx.android.synthetic.main.activity_movie_detail.*
-import okhttp3.internal.waitMillis
 import javax.inject.Inject
 
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity(), OnShowMovieSelectedListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactoryDI
     private lateinit var viewModel: MovieDetailViewModel
     private lateinit var binding: ActivityMovieDetailBinding
-    val args: MovieDetailActivityArgs by navArgs()
 
     private var refreshPoster = false
 
@@ -53,10 +56,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.movieDetailToolbar)
 
-//        val motionProgress = savedInstanceState?.getFloat(SAVE_MOTION_PROGRESS)
-//        motionProgress?.let { binding.motionLayout.progress = it }
-
-        val id = args.mediaId
+        val id = intent.getIntExtra(OnShowMovieSelectedListener.CONTENT_ID, 0)
         ViewCompat.setTransitionName(binding.detailMoviePoster, "headPoster$id")
         ViewCompat.setTransitionName(binding.detailTitle, "headTitle$id")
 
@@ -115,6 +115,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun initCastList(id: Int){
         val mAdapter = CastRcAdapter()
+        mAdapter.setListener(this)
         binding.detailTopCastList.apply {
             adapter = mAdapter
             setHasFixedSize(true)
@@ -132,6 +133,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun initSimilarMovieList(id: Int){
         val mAdapter = SimilarRCAdapter()
+        mAdapter.setListener(this)
         binding.detailSimilarMovieList.apply {
             adapter = mAdapter
             setHasFixedSize(true)
@@ -189,4 +191,29 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
+    override fun onItemSelected(view: View, id: Int, contentType: Int) {
+        when(contentType){
+            OnShowMovieSelectedListener.MOVIE_TYPE -> {
+                val option = ActivityOptions.makeSceneTransitionAnimation(this,
+                    Pair(view.findViewById<ImageView>(R.id.head_poster_img), "headPoster$id"),
+                    Pair(view.findViewById<TextView>(R.id.movie_title), "headTitle$id"),
+                    Pair(view.findViewById<TextView>(R.id.movie_title), "headTitle$id")
+                )
+                val intent = Intent(this, MovieDetailActivity::class.java)
+                intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                startActivity(intent, option.toBundle())
+            }
+            OnShowMovieSelectedListener.TV_SHOW_TYPE -> {}
+            OnShowMovieSelectedListener.PERSON_TYPE -> {
+                val intent = Intent(this, PersonActivity::class.java)
+                intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                val options = ActivityOptions.makeSceneTransitionAnimation(this,
+                    Pair.create(view.findViewById<ImageView>(R.id.head_poster_img), "headPoster${id}"),
+                    Pair.create(view.findViewById<TextView>(R.id.movie_title), "headTitle${id}"),
+                    Pair.create(view.findViewById<TextView>(R.id.movie_title), "headTitle${id}")
+                )
+                startActivity(intent, options.toBundle())
+            }
+        }
+    }
 }

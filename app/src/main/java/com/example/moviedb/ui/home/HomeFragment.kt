@@ -1,5 +1,6 @@
 package com.example.moviedb.ui.home
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,7 @@ import com.example.moviedb.databinding.HomeFragmentBinding
 import com.example.moviedb.di.ViewModelFactoryDI
 import com.example.moviedb.ui.MainActivity
 import com.example.moviedb.ui.base.OnShowMovieSelectedListener
+import com.example.moviedb.ui.detaile.MovieDetailActivity
 import com.example.moviedb.ui.home.adapter.MarginDecorator
 import com.example.moviedb.ui.home.adapter.MovieRvAdapter
 import com.example.moviedb.ui.home.adapter.PopularMoviesPagerAdapter
@@ -155,14 +157,14 @@ class HomeFragment : Fragment(), OnShowMovieSelectedListener {
 
         when(contentType){
             OnShowMovieSelectedListener.MOVIE_TYPE -> {
-                val direction = HomeFragmentDirections.actionHomeFragmentToMovieDetailActivity(id)
                 val option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,
                     Pair(view.findViewById<ImageView>(R.id.head_poster_img), "headPoster$id"),
                     Pair(view.findViewById<TextView>(R.id.movie_title), "headTitle$id"),
                     Pair(view.findViewById<TextView>(R.id.movie_title), "headTitle$id")
                 )
-                val extras = ActivityNavigator.Extras.Builder().setActivityOptions(option).build()
-                view.findNavController().navigate(direction, extras)
+                val intent = Intent(activity!!, MovieDetailActivity::class.java)
+                intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                startActivity(intent, option.toBundle())
             }
             OnShowMovieSelectedListener.TV_SHOW_TYPE -> {}
             OnShowMovieSelectedListener.PERSON_TYPE -> {}

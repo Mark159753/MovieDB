@@ -23,6 +23,7 @@ class TrendTVViewHolder(view:View):RecyclerView.ViewHolder(view) {
         Picasso.get()
             .load("https://image.tmdb.org/t/p/w500" + data?.posterPath)
             .into(poster)
+        poster.clipToOutline = true
         data?.genreIds?.let {
             val g = StringBuilder()
             try { g.append(bindGenre (it[0], genres))}catch (e:IndexOutOfBoundsException){}

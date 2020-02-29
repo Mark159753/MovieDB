@@ -12,9 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.person.PersonActivity"></activity>
         <activity
             android:name=".ui.youTube.YoutubeActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.detaile.MovieDetailActivity"
             android:label="@string/title_activity_movie_detail"

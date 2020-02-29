@@ -32,4 +32,7 @@
     <string name="detail_top_billed_cast">Актерский Состав</string>
     <string name="detail_similar_movies">Похожие Фильмы</string>
     <string name="missing_video">Видео недоступно</string>
+    <string name="person_biography">Биография</string>
+    <string name="person_known_for">Известный За</string>
+    <string name="person_yesrs_old">лет</string>
 </resources>

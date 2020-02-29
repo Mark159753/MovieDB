@@ -8,6 +8,7 @@ import com.example.moviedb.ui.coming.fragment.ComingTVShowsFragment
 import com.example.moviedb.ui.detaile.MovieDetailActivity
 import com.example.moviedb.ui.discover.DiscoverFragment
 import com.example.moviedb.ui.home.HomeFragment
+import com.example.moviedb.ui.person.PersonActivity
 import com.example.moviedb.ui.trendsMore.TrendActivity
 import dagger.BindsInstance
 import dagger.Subcomponent
@@ -27,6 +28,8 @@ interface FragmentComponent {
     fun inject(main:TrendActivity)
 
     fun inject(main:MovieDetailActivity)
+
+    fun inject(main:PersonActivity)
 
     @Subcomponent.Factory
     interface Factory{

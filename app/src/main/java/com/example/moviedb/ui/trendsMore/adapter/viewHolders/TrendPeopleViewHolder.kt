@@ -22,6 +22,7 @@ class TrendPeopleViewHolder(private val context: Context, view:View):RecyclerVie
         Picasso.get()
             .load("https://image.tmdb.org/t/p/w500" + data?.profilePath)
             .into(poster)
+        poster.clipToOutline = true
         genres.text = if (data?.gender == 1)
             context.resources.getString(R.string.gender_woman)
             else context.resources.getString(R.string.gender_man)

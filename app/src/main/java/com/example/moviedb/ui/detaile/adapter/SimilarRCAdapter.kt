@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -46,8 +47,8 @@ class SimilarRCAdapter:BaseMovieAdapter<Result>(COMPARATOR) {
             Picasso.get()
                 .load("https://image.tmdb.org/t/p/w500" + data.posterPath)
                 .into(binder.headPosterImg)
-//            ViewCompat.setTransitionName(binder.headPosterImg, "headPoster${data.id}")
-//            ViewCompat.setTransitionName(binder.movieTitle, "headTitle${data.id}")
+            ViewCompat.setTransitionName(binder.headPosterImg, "headPoster${data.id}")
+            ViewCompat.setTransitionName(binder.movieTitle, "headTitle${data.id}")
         }
 
         companion object{

@@ -6,9 +6,12 @@ import com.example.moviedb.model.discover.DiscoverResponse
 import com.example.moviedb.model.genre.GenreResponse
 import com.example.moviedb.model.movieDetail.MovieDetailResponse
 import com.example.moviedb.model.movieVideo.VideoResponse
+import com.example.moviedb.model.person.credits.KnownForResponse
+import com.example.moviedb.model.person.detail.PersonDetailsResponse
 import com.example.moviedb.model.popular.ResponsePopular
 import com.example.moviedb.model.similarMovies.SimilarMoviesResponse
 import com.example.moviedb.model.theathre.InTheaterResponse
+import com.example.moviedb.model.trends.KnownFor
 import com.example.moviedb.model.trends.TrendsResponse
 import com.example.moviedb.model.tv.OnTvResponse
 import okhttp3.Interceptor
@@ -94,6 +97,17 @@ interface TMDBserver {
             @Query("language") language:String = "en_US"
         ):Call<VideoResponse>
 
+    @GET("person/{person_id}")
+    fun getPersonDetails(
+        @Path("person_id") person_id:Int,
+        @Query("language") language:String = "en_US"
+    ):Call<PersonDetailsResponse>
+
+    @GET("person/{person_id}/combined_credits")
+    fun getPersonKnownForCast(
+        @Path("person_id") person_id:Int,
+        @Query("language") language:String = "en_US"
+    ):Call<KnownForResponse>
 
     companion object{
         operator fun invoke():TMDBserver{

@@ -6,10 +6,13 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.example.moviedb.R
 import com.example.moviedb.model.discover.DiscoverResult
 import com.example.moviedb.model.genre.Genre
 import com.example.moviedb.model.movieDetail.ProductionCountry
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.*
 
 @BindingAdapter("loadImg")
 fun loadImg(view:ImageView, path:String?){
@@ -74,6 +77,31 @@ fun getCountriesList(view: TextView, data:List<ProductionCountry>?){
             view.text = genres.substring(0, genres.length-2)
         }catch (e:StringIndexOutOfBoundsException){
             view.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter(value = ["birthday", "deathday"], requireAll = false)
+fun getAge(view:TextView, birthdayDate:String?, deathdayDate:String?){
+    val birthday = Calendar.getInstance()
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+    if (birthdayDate != null) {
+        birthday.time = sdf.parse(birthdayDate)
+        if (deathdayDate == null) {
+            val today = Calendar.getInstance()
+            var age = today.get(Calendar.YEAR) - birthday.get(Calendar.YEAR)
+            if (today.get(Calendar.DAY_OF_YEAR) < birthday.get(Calendar.DAY_OF_YEAR))
+                age--
+            val intAge = age.toInt()
+            view.text = "$intAge ${view.context.resources.getString(R.string.person_yesrs_old)}"
+        } else {
+            val today = Calendar.getInstance()
+            today.time = sdf.parse(deathdayDate)
+            var age = today.get(Calendar.YEAR) - birthday.get(Calendar.YEAR)
+            if (today.get(Calendar.DAY_OF_YEAR) < birthday.get(Calendar.DAY_OF_YEAR))
+                age--
+            val intAge = age.toInt()
+            view.text = "$intAge ${view.context.resources.getString(R.string.person_yesrs_old)}"
         }
     }
 }

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.R
@@ -82,13 +83,13 @@ class CastRcAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(data: Cast?){
             binder.movieTitle.text = data!!.name
             binder.root.setOnClickListener {
-                listener?.onItemSelected(it, data.id, OnShowMovieSelectedListener.MOVIE_TYPE)
+                listener?.onItemSelected(it, data.id, OnShowMovieSelectedListener.PERSON_TYPE)
             }
             Picasso.get()
                 .load("https://image.tmdb.org/t/p/w500" + data.profilePath)
                 .into(binder.headPosterImg)
-//            ViewCompat.setTransitionName(binder.headPosterImg, "headPoster${data.id}")
-//            ViewCompat.setTransitionName(binder.movieTitle, "headTitle${data.id}")
+            ViewCompat.setTransitionName(binder.headPosterImg, "headPoster${data.id}")
+            ViewCompat.setTransitionName(binder.movieTitle, "headTitle${data.id}")
         }
 
 
