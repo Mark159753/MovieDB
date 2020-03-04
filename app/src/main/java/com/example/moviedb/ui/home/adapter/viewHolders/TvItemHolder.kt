@@ -3,6 +3,7 @@ package com.example.moviedb.ui.home.adapter.viewHolders
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.databinding.HeadFilmItemBinding
@@ -23,6 +24,8 @@ class TvItemHolder(view:View, private val listener: OnShowMovieSelectedListener?
             Picasso.get()
                 .load("https://image.tmdb.org/t/p/w500" + it.posterPath)
                 .into(binder.headPosterImg)
+            ViewCompat.setTransitionName(binder.headPosterImg, "headPoster${data.id}")
+            ViewCompat.setTransitionName(binder.movieTitle, "headTitle${data.id}")
         }
     }
 

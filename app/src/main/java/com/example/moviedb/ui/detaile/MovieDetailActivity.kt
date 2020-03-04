@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -27,6 +28,7 @@ import com.example.moviedb.ui.detaile.adapter.CastRcAdapter
 import com.example.moviedb.ui.detaile.adapter.SimilarRCAdapter
 import com.example.moviedb.ui.home.adapter.MarginDecorator
 import com.example.moviedb.ui.person.PersonActivity
+import com.example.moviedb.ui.tvDetails.TvDetailsActivity
 import com.example.moviedb.ui.youTube.YoutubeActivity
 import com.example.moviedb.until.LocaleHelper
 import com.example.moviedb.until.NetworkState
@@ -203,7 +205,17 @@ class MovieDetailActivity : AppCompatActivity(), OnShowMovieSelectedListener {
                 intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
                 startActivity(intent, option.toBundle())
             }
-            OnShowMovieSelectedListener.TV_SHOW_TYPE -> {}
+            OnShowMovieSelectedListener.TV_SHOW_TYPE -> {
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                    androidx.core.util.Pair(
+                        view.findViewById<ImageView>(R.id.head_poster_img),
+                        "headPoster$id"
+                    )
+                )
+                val intent = Intent(this, TvDetailsActivity::class.java)
+                intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                startActivity(intent, option.toBundle())
+            }
             OnShowMovieSelectedListener.PERSON_TYPE -> {
                 val intent = Intent(this, PersonActivity::class.java)
                 intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)

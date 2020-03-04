@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewOutlineProvider
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -24,6 +25,7 @@ import com.example.moviedb.ui.base.OnShowMovieSelectedListener
 import com.example.moviedb.ui.detaile.MovieDetailActivity
 import com.example.moviedb.ui.home.adapter.MarginDecorator
 import com.example.moviedb.ui.person.adapter.KnownForRCAdapter
+import com.example.moviedb.ui.tvDetails.TvDetailsActivity
 import com.example.moviedb.until.LocaleHelper
 import kotlinx.android.synthetic.main.activity_person.*
 import javax.inject.Inject
@@ -102,7 +104,17 @@ class PersonActivity : AppCompatActivity(), OnShowMovieSelectedListener {
                 intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
                 startActivity(intent, option.toBundle())
             }
-            OnShowMovieSelectedListener.TV_SHOW_TYPE -> {}
+            OnShowMovieSelectedListener.TV_SHOW_TYPE -> {
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                    androidx.core.util.Pair(
+                        view.findViewById<ImageView>(R.id.head_poster_img),
+                        "headPoster$id"
+                    )
+                )
+                val intent = Intent(this, TvDetailsActivity::class.java)
+                intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                startActivity(intent, option.toBundle())
+            }
             OnShowMovieSelectedListener.PERSON_TYPE -> {}
         }
     }

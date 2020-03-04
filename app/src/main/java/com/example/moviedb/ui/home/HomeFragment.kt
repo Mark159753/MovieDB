@@ -28,6 +28,7 @@ import com.example.moviedb.ui.home.adapter.MarginDecorator
 import com.example.moviedb.ui.home.adapter.MovieRvAdapter
 import com.example.moviedb.ui.home.adapter.PopularMoviesPagerAdapter
 import com.example.moviedb.ui.home.adapter.TvRvAdapter
+import com.example.moviedb.ui.tvDetails.TvDetailsActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.home_fragment.*
 import javax.inject.Inject
@@ -166,7 +167,14 @@ class HomeFragment : Fragment(), OnShowMovieSelectedListener {
                 intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
                 startActivity(intent, option.toBundle())
             }
-            OnShowMovieSelectedListener.TV_SHOW_TYPE -> {}
+            OnShowMovieSelectedListener.TV_SHOW_TYPE -> {
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,
+                    Pair(view.findViewById<ImageView>(R.id.head_poster_img), "headPoster$id")
+                )
+                val intent = Intent(activity!!, TvDetailsActivity::class.java)
+                intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                startActivity(intent, option.toBundle())
+            }
             OnShowMovieSelectedListener.PERSON_TYPE -> {}
         }
     }

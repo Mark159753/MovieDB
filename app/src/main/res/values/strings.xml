@@ -44,4 +44,9 @@
     <string name="person_biography">Biography</string>
     <string name="person_yesrs_old">years old</string>
     <string name="person_known_for">Known For</string>
+    <string name="tv_details">Details</string>
+    <string name="tv_see_more">see more...</string>
+    <string name="tv_number_od_episodes">Number od Episodes:</string>
+    <string name="tv_seasons_number">Seasons Number:</string>
+    <string name="tv_last_air_date">Last air date:</string>
 </resources>

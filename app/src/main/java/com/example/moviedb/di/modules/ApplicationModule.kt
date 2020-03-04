@@ -13,6 +13,9 @@ import com.example.moviedb.data.repository.paging.PagingRepository
 import com.example.moviedb.data.repository.paging.PagingRepositoryImpl
 import com.example.moviedb.data.repository.person.PersonRepository
 import com.example.moviedb.data.repository.person.PersonRepositoryImpl
+import com.example.moviedb.data.repository.tvDetails.SeasonsDetailsRepository
+import com.example.moviedb.data.repository.tvDetails.TvDetailsRepository
+import com.example.moviedb.data.repository.tvDetails.TvDetailsRepositoryImpl
 import com.example.moviedb.di.scope.FragmentScope
 import dagger.Module
 import dagger.Provides
@@ -51,6 +54,20 @@ object ApplicationModule {
     @Provides
     fun providePersonRepository(server: TMDBserver):PersonRepository{
         return PersonRepositoryImpl(server)
+    }
+
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideTvDetailsRepository(server: TMDBserver):TvDetailsRepository{
+        return TvDetailsRepositoryImpl(server)
+    }
+
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideTvSeasonsDetailsRepository(server: TMDBserver):SeasonsDetailsRepository{
+        return TvDetailsRepositoryImpl(server)
     }
 
     @JvmStatic

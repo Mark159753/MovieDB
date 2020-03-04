@@ -35,4 +35,9 @@
     <string name="person_biography">Биография</string>
     <string name="person_known_for">Известный За</string>
     <string name="person_yesrs_old">лет</string>
+    <string name="tv_details">Детали</string>
+    <string name="tv_last_air_date">Последний выпуск</string>
+    <string name="tv_number_od_episodes">Количество эпизодов</string>
+    <string name="tv_seasons_number">Количество сезонов</string>
+    <string name="tv_see_more">Подробнее</string>
 </resources>

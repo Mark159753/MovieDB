@@ -10,7 +10,9 @@ import com.example.moviedb.ui.detaile.MovieDetailViewModel
 import com.example.moviedb.ui.discover.DiscoverViewModel
 import com.example.moviedb.ui.home.HomeViewModel
 import com.example.moviedb.ui.person.PersonViewModel
+import com.example.moviedb.ui.seasons.SeasonViewModel
 import com.example.moviedb.ui.trendsMore.TrendsViewModel
+import com.example.moviedb.ui.tvDetails.TvDetailsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -52,6 +54,16 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(PersonViewModel::class)
     abstract fun bindPersonViewModel(model:PersonViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TvDetailsViewModel::class)
+    abstract fun bindTvDetailsViewModel(model:TvDetailsViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SeasonViewModel::class)
+    abstract fun bindSeasonViewModel(model:SeasonViewModel):ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory:ViewModelFactoryDI):ViewModelProvider.Factory

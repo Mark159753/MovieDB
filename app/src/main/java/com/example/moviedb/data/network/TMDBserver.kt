@@ -9,11 +9,13 @@ import com.example.moviedb.model.movieVideo.VideoResponse
 import com.example.moviedb.model.person.credits.KnownForResponse
 import com.example.moviedb.model.person.detail.PersonDetailsResponse
 import com.example.moviedb.model.popular.ResponsePopular
+import com.example.moviedb.model.seasons.SeasonsDetailsResponse
 import com.example.moviedb.model.similarMovies.SimilarMoviesResponse
 import com.example.moviedb.model.theathre.InTheaterResponse
 import com.example.moviedb.model.trends.KnownFor
 import com.example.moviedb.model.trends.TrendsResponse
 import com.example.moviedb.model.tv.OnTvResponse
+import com.example.moviedb.model.tvDetails.TvDetailsResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -108,6 +110,31 @@ interface TMDBserver {
         @Path("person_id") person_id:Int,
         @Query("language") language:String = "en_US"
     ):Call<KnownForResponse>
+
+    @GET("tv/{tv_id}")
+    fun getTvDetails(
+        @Path("tv_id") tv_id:Int,
+        @Query("language") language:String = "en_US"
+    ):Call<TvDetailsResponse>
+
+    @GET("tv/{tv_id}/credits")
+    fun getTvCast(
+        @Path("tv_id") tv_id:Int,
+        @Query("language") language:String = "en_US"
+    ):Call<CastResponse>
+
+    @GET("tv/{tv_id}/videos")
+    fun getTvVideos(
+        @Path("tv_id") tv_id:Int,
+        @Query("language") language:String = "en_US"
+    ):Call<VideoResponse>
+
+    @GET("tv/{tv_id}/season/{season_number}")
+    fun getTvSeasonDetails(
+        @Path("tv_id") tv_id:Int,
+        @Path("season_number") season_number:Int,
+        @Query("language") language:String = "en_US"
+    ):Call<SeasonsDetailsResponse>
 
     companion object{
         operator fun invoke():TMDBserver{
