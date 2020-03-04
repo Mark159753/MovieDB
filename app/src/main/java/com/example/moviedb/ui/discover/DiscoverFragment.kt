@@ -1,5 +1,6 @@
 package com.example.moviedb.ui.discover
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.lifecycle.Observer
 import com.example.moviedb.MovieApp
 
@@ -15,6 +20,8 @@ import com.example.moviedb.R
 import com.example.moviedb.di.ViewModelFactoryDI
 import com.example.moviedb.model.discover.DiscoverResult
 import com.example.moviedb.ui.MainActivity
+import com.example.moviedb.ui.base.OnShowMovieSelectedListener
+import com.example.moviedb.ui.detaile.MovieDetailActivity
 import com.example.moviedb.ui.discover.adapter.DiscoverListAdapter
 import com.example.moviedb.ui.discover.adapter.DiscoverMarginDecoarator
 import com.example.moviedb.until.Listening
@@ -24,7 +31,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class DiscoverFragment : Fragment(), FilterDialog.FilterDialogListener{
+class DiscoverFragment : Fragment(), FilterDialog.FilterDialogListener, OnShowMovieSelectedListener{
 
     private lateinit var mAdapter:DiscoverListAdapter
     private var withGenre: ArrayList<Int> = ArrayList<Int>()
@@ -91,6 +98,7 @@ class DiscoverFragment : Fragment(), FilterDialog.FilterDialogListener{
 
     private fun initDiscoverList(){
         mAdapter = DiscoverListAdapter()
+        mAdapter.setListener(this)
         discover_list.apply {
             adapter = mAdapter
             setHasFixedSize(true)
@@ -153,5 +161,20 @@ class DiscoverFragment : Fragment(), FilterDialog.FilterDialogListener{
             primary_release_date_to = dateTo,
             language = LocaleHelper.getLanguage(activity!!))
         updateDiscoverListData(res)
+    }
+
+    override fun onItemSelected(view: View, id: Int, contentType: Int) {
+        when(contentType){
+            OnShowMovieSelectedListener.MOVIE_TYPE -> {
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,
+                    Pair(view.findViewById<ImageView>(R.id.discover_poster), "headPoster$id"),
+                    Pair(view.findViewById<TextView>(R.id.discover_title), "headTitle$id"),
+                    Pair(view.findViewById<TextView>(R.id.discover_title), "headTitle$id")
+                )
+                val intent = Intent(activity!!, MovieDetailActivity::class.java)
+                intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                startActivity(intent, option.toBundle())
+            }
+        }
     }
 }

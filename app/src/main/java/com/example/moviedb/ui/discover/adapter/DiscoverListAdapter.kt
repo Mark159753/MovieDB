@@ -14,7 +14,7 @@ class DiscoverListAdapter:BaseMovieAdapter<DiscoverResult>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
-            R.layout.discover_card_item -> {DiscoverItemHolder.create(parent)}
+            R.layout.discover_card_item -> {DiscoverItemHolder.create(parent, listener)}
             R.layout.discover_load_item -> {DiscoverLoadHolder.create(parent)}
             else -> throw IllegalStateException("unknown view type $viewType")
         }

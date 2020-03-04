@@ -17,7 +17,7 @@ class ComingTVShowsAdapter:BaseMovieAdapter<ResultTV>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
-            R.layout.coming_item -> ComingTvShowsViewHolder.create(parent)
+            R.layout.coming_item -> ComingTvShowsViewHolder.create(parent, listener)
             R.layout.coming_network_item -> ComingNetworkSateViewHolder.create(parent)
             else -> throw IllegalStateException("unknown viewType")
         }

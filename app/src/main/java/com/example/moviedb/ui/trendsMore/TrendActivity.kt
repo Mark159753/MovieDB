@@ -1,27 +1,37 @@
 package com.example.moviedb.ui.trendsMore
 
+import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Pair
 import android.view.Menu
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.moviedb.MovieApp
 import com.example.moviedb.R
 import com.example.moviedb.data.repository.trends.TrendsRepository
 import com.example.moviedb.di.ViewModelFactoryDI
+import com.example.moviedb.ui.base.OnShowMovieSelectedListener
+import com.example.moviedb.ui.detaile.MovieDetailActivity
+import com.example.moviedb.ui.person.PersonActivity
 import com.example.moviedb.ui.trendsMore.adapter.TrendRCDecorator
 import com.example.moviedb.ui.trendsMore.adapter.TrendsOfDayRCAdapter
+import com.example.moviedb.ui.tvDetails.TvDetailsActivity
 import com.example.moviedb.until.LocaleHelper
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_trend.*
 import javax.inject.Inject
 
-class TrendActivity : AppCompatActivity() {
+class TrendActivity : AppCompatActivity(), OnShowMovieSelectedListener {
 
     private val SAVE_MEDIA_TYPE = "SAVE_MEDIA_TYPE"
 
@@ -116,6 +126,7 @@ class TrendActivity : AppCompatActivity() {
 
     private fun initTodayList(){
         todayListAdapter = TrendsOfDayRCAdapter(this)
+        todayListAdapter.setListener(this)
         trend_today_list.apply {
             adapter = todayListAdapter
             setHasFixedSize(true)
@@ -126,6 +137,7 @@ class TrendActivity : AppCompatActivity() {
 
     private fun initWeekList(){
         weekListAdapter = TrendsOfDayRCAdapter(this)
+        weekListAdapter.setListener(this)
         trend_week_list.apply {
             adapter = weekListAdapter
             setHasFixedSize(true)
@@ -199,6 +211,39 @@ class TrendActivity : AppCompatActivity() {
         val type = savedInstanceState?.getString(SAVE_MEDIA_TYPE, TrendsRepository.TREND_ALL_TYPE)
         type?.let {
             mediaType = it
+        }
+    }
+
+    override fun onItemSelected(view: View, id: Int, contentType: Int) {
+        when(contentType){
+            OnShowMovieSelectedListener.MOVIE_TYPE -> {
+                val option = ActivityOptions.makeSceneTransitionAnimation(this,
+                    Pair(view.findViewById<ImageView>(R.id.trend_list_poster), "headPoster$id"),
+                    Pair(view.findViewById<TextView>(R.id.trend_list_title), "headTitle$id"),
+                    Pair(view.findViewById<TextView>(R.id.trend_list_title), "headTitle$id")
+                )
+                val intent = Intent(this, MovieDetailActivity::class.java)
+                intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                startActivity(intent, option.toBundle())
+            }
+            OnShowMovieSelectedListener.TV_SHOW_TYPE -> {
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                    view.findViewById<ImageView>(R.id.trend_list_poster), "headPoster$id"
+                )
+                val intent = Intent(this, TvDetailsActivity::class.java)
+                intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                startActivity(intent, option.toBundle())
+            }
+            OnShowMovieSelectedListener.PERSON_TYPE -> {
+                val intent = Intent(this, PersonActivity::class.java)
+                intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                val options = ActivityOptions.makeSceneTransitionAnimation(this,
+                    Pair(view.findViewById<ImageView>(R.id.trend_list_poster), "headPoster$id"),
+                    Pair(view.findViewById<TextView>(R.id.trend_list_title), "headTitle$id"),
+                    Pair(view.findViewById<TextView>(R.id.trend_list_title), "headTitle$id")
+                )
+                startActivity(intent, options.toBundle())
+            }
         }
     }
 }

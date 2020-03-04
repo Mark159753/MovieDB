@@ -30,10 +30,10 @@ class TrendsOfDayRCAdapter(private val context: Context): BaseMovieAdapter<Trend
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
-            MOVIE_VIEW_TYPE -> TrendsMovieViewHolder.create(parent)
+            MOVIE_VIEW_TYPE -> TrendsMovieViewHolder.create(parent, listener)
             NETWORK_LOAD_VIEW_TYPE -> TrendsLoadVeiwHolder.create(parent)
-            PEOPLE_VIEW_TYPE -> TrendPeopleViewHolder.create(context, parent)
-            TV_VIEW_TYPE -> TrendTVViewHolder.create(parent)
+            PEOPLE_VIEW_TYPE -> TrendPeopleViewHolder.create(context, parent, listener)
+            TV_VIEW_TYPE -> TrendTVViewHolder.create(parent, listener)
             else -> throw IllegalStateException("unknown view type $viewType")
         }
     }

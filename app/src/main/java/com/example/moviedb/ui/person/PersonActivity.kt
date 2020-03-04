@@ -1,6 +1,7 @@
 package com.example.moviedb.ui.person
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.graphics.Outline
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,10 @@ class PersonActivity : AppCompatActivity(), OnShowMovieSelectedListener {
     lateinit var viewModelFactory: ViewModelFactoryDI
     private lateinit var viewModel: PersonViewModel
     private lateinit var binding:ActivityPersonBinding
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase!!, LocaleHelper.getLanguage(newBase)))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
