@@ -7,6 +7,15 @@
         <variable
             name="model"
             type="com.example.moviedb.ui.home.HomeViewModel" />
+        <variable
+            name="firstListener"
+            type="com.example.moviedb.ui.base.OnShowMovieSelectedListener" />
+        <variable
+            name="secondListener"
+            type="com.example.moviedb.ui.base.OnShowMovieSelectedListener" />
+        <variable
+            name="thirdListener"
+            type="com.example.moviedb.ui.base.OnShowMovieSelectedListener" />
     </data>
 
     <ScrollView
@@ -134,18 +143,22 @@
                         android:layout_marginBottom="@dimen/sides_margin"
                         android:weightSum="1">
                         <FrameLayout
+                            android:id="@+id/trend_movie_first"
                             android:layout_width="0dp"
                             android:layout_height="200dp"
                             android:layout_weight="0.5"
+                            android:onClick="@{(view) -> firstListener.onItemSelected(view, model.trendsOfDay[0].id, 1)}"
                             android:layout_marginRight="@dimen/home_img_margins">
 
                             <ImageView
+                                android:id="@+id/trend_movie_first_img"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
                                 app:loadImg="@{model.trendsOfDay[0].posterPath}"
                                 android:background="@color/textHintColor"/>
                             <TextView
+                                android:id="@+id/trend_movie_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{model.trendsOfDay.empty ? model.updateTrendOfDay() : model.trendsOfDay[0].title}"
@@ -167,18 +180,22 @@
                             android:orientation="vertical"
                             android:weightSum="1">
                             <FrameLayout
+                                android:id="@+id/trend_movie_second"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
+                                android:onClick="@{(view) -> secondListener.onItemSelected(view, model.trendsOfDay[1].id, 1)}"
                                 android:layout_marginLeft="@dimen/home_img_margins"
                                 android:layout_marginBottom="@dimen/home_img_margins"
                                 android:layout_weight="0.5">
                                 <ImageView
+                                    android:id="@+id/trend_movie_second_img"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:scaleType="centerCrop"
                                     app:loadImg="@{model.trendsOfDay[1].posterPath}"
                                     android:background="@color/textHintColor" />
                                 <TextView
+                                    android:id="@+id/trend_movie_second_title"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     tools:text="Some Film Name"
@@ -194,18 +211,22 @@
                                     android:textColor="@android:color/white"/>
                             </FrameLayout>
                             <FrameLayout
+                                android:id="@+id/trend_movie_third"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
+                                android:onClick="@{(view) -> thirdListener.onItemSelected(view, model.trendsOfDay[2].id, 1)}"
                                 android:layout_marginLeft="@dimen/home_img_margins"
                                 android:layout_marginTop="@dimen/home_img_margins"
                                 android:layout_weight="0.5">
                                 <ImageView
+                                    android:id="@+id/trend_movie_third_img"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:scaleType="centerCrop"
                                     app:loadImg="@{model.trendsOfDay[2].posterPath}"
                                     android:background="@color/textHintColor"/>
                                 <TextView
+                                    android:id="@+id/trend_movie_third_title"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     tools:text="Some Film Name"

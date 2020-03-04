@@ -30,7 +30,6 @@ data class MovieDetailResponse(
     val productionCountries: List<ProductionCountry>,
     @SerializedName("release_date")
     val releaseDate: String,
-    val revenue: Int,
     val runtime: Int,
     @SerializedName("spoken_languages")
     val spokenLanguages: List<SpokenLanguage>,

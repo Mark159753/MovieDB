@@ -41,6 +41,24 @@ class HomeFragment : Fragment(), OnShowMovieSelectedListener {
     lateinit var viewModelFactory:ViewModelFactoryDI
     private lateinit var viewModel: HomeViewModel
 
+    private val popularMoviesListener = object : OnShowMovieSelectedListener{
+        override fun onItemSelected(view: View, id: Int, contentType: Int) {
+            when(contentType){
+                OnShowMovieSelectedListener.MOVIE_TYPE -> {
+                    val option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,
+                        Pair(view.findViewById<ImageView>(R.id.popular_poster), "headPoster$id"),
+                        Pair(view.findViewById<TextView>(R.id.popular_title), "headTitle$id"),
+                        Pair(view.findViewById<TextView>(R.id.popular_title), "headTitle$id")
+                    )
+                    val intent = Intent(activity!!, MovieDetailActivity::class.java)
+                    intent.putExtra(OnShowMovieSelectedListener.CONTENT_ID, id)
+                    startActivity(intent, option.toBundle())
+                }
+            }
+        }
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,6 +85,7 @@ class HomeFragment : Fragment(), OnShowMovieSelectedListener {
         initOnTvAdapter()
         initPopularMovies()
         initOpenMoreTrendsBtn()
+        initTrendListener()
     }
 
 
@@ -78,6 +97,12 @@ class HomeFragment : Fragment(), OnShowMovieSelectedListener {
     override fun onPause() {
         binding.popularSlider.pauseAutoScroll()
         super.onPause()
+    }
+
+    private fun initTrendListener(){
+        binding.firstListener = TrendMovieListener(activity!!, binding.trendMovieFirstImg, binding.trendMovieTitle)
+        binding.secondListener = TrendMovieListener(activity!!, binding.trendMovieSecondImg, binding.trendMovieSecondTitle)
+        binding.thirdListener = TrendMovieListener(activity!!, binding.trendMovieThirdImg, binding.trendMovieThirdTitle)
     }
 
     private fun initTabs(){
@@ -137,12 +162,12 @@ class HomeFragment : Fragment(), OnShowMovieSelectedListener {
     }
 
     private fun initPopularMovies(){
-        viewModel.popularMovies.observe(viewLifecycleOwner, Observer {
-            if (it.isEmpty()) viewModel.loadPopularMovies()
+        viewModel.popularMovies.observe(viewLifecycleOwner, Observer { dataList ->
+            if (dataList.isEmpty()) viewModel.loadPopularMovies()
             binding.popularProgressBar.visibility = View.GONE
             binding.popularSlider.apply {
                 visibility = View.VISIBLE
-                adapter = PopularMoviesPagerAdapter(this@HomeFragment.activity!!, it, true)
+                adapter = PopularMoviesPagerAdapter(this@HomeFragment.activity!!, dataList, true).also { it.setListener(popularMoviesListener) }
                 pageMargin = 24
             }
         })

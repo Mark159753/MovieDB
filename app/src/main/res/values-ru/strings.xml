@@ -27,7 +27,7 @@
     <string name="tv_shows_trend_type">Сериалы</string>
     <string name="with_genre">Из жанром</string>
     <string name="without_genre">Без жанра</string>
-    <string name="detail_loading_error">Ошыбка загрузки</string>
+    <string name="detail_loading_error">Ошибка загрузки</string>
     <string name="detail_overview">Обзор</string>
     <string name="detail_top_billed_cast">Актерский Состав</string>
     <string name="detail_similar_movies">Похожие Фильмы</string>
